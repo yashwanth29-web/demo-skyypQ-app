@@ -1,0 +1,866 @@
+[
+  {
+    "id": "loc_l1",
+    "name": "Charminar",
+    "address": "Charminar Rd, Hyderabad",
+    "distance": "12 km",
+    "lat": 17.3616,
+    "lng": 78.4747
+  },
+  {
+    "id": "loc_l2",
+    "name": "Golconda Fort",
+    "address": "Khair Complex, Ibrahim Bagh, Hyderabad",
+    "distance": "14 km",
+    "lat": 17.3833,
+    "lng": 78.4011
+  },
+  {
+    "id": "loc_l3",
+    "name": "Ramoji Film City",
+    "address": "Anaspur Village, Hayathnagar Mandal, Hyderabad",
+    "distance": "30 km",
+    "lat": 17.2543,
+    "lng": 78.6808
+  },
+  {
+    "id": "loc_l4",
+    "name": "Hussain Sagar Lake",
+    "address": "Tank Bund Rd, Hyderabad",
+    "distance": "5 km",
+    "lat": 17.4239,
+    "lng": 78.4738
+  },
+  {
+    "id": "loc_l5",
+    "name": "Salar Jung Museum",
+    "address": "Salar Jung Rd, Darulshifa, Hyderabad",
+    "distance": "10 km",
+    "lat": 17.3713,
+    "lng": 78.4804
+  },
+  {
+    "id": "loc_l6",
+    "name": "Inorbit Mall",
+    "address": "APIIC Software Layout, Madhapur, Hyderabad",
+    "distance": "4 km",
+    "lat": 17.4337,
+    "lng": 78.3866
+  },
+  {
+    "id": "loc_l7",
+    "name": "IKEA Hyderabad",
+    "address": "Raidurg, Serilingampally, Hyderabad",
+    "distance": "3 km",
+    "lat": 17.4389,
+    "lng": 78.3764
+  },
+  {
+    "id": "loc_l8",
+    "name": "Rajiv Gandhi International Airport",
+    "address": "Shamshabad, Hyderabad",
+    "distance": "25 km",
+    "lat": 17.2403,
+    "lng": 78.4294
+  },
+  {
+    "id": "loc_1",
+    "name": "Green Park",
+    "address": "72, Begumpet, Hyderabad, Telangana",
+    "distance": "10.2 km",
+    "lat": 17.453440390625534,
+    "lng": 78.45793305619506
+  },
+  {
+    "id": "loc_2",
+    "name": "Royal School",
+    "address": "10, Begumpet, Hyderabad, Telangana",
+    "distance": "14.8 km",
+    "lat": 17.43763861517307,
+    "lng": 78.46945688820047
+  },
+  {
+    "id": "loc_3",
+    "name": "Central Cafe",
+    "address": "54, Ameerpet, Hyderabad, Telangana",
+    "distance": "6.0 km",
+    "lat": 17.443016866316995,
+    "lng": 78.44311469634366
+  },
+  {
+    "id": "loc_4",
+    "name": "City School",
+    "address": "27, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "13.1 km",
+    "lat": 17.4415472605868,
+    "lng": 78.41226045111931
+  },
+  {
+    "id": "loc_5",
+    "name": "Royal Apartments",
+    "address": "49, Banjara Hills, Hyderabad, Telangana",
+    "distance": "8.6 km",
+    "lat": 17.40640765088106,
+    "lng": 78.43445716603422
+  },
+  {
+    "id": "loc_6",
+    "name": "Central Restaurant",
+    "address": "10, Begumpet, Hyderabad, Telangana",
+    "distance": "9.5 km",
+    "lat": 17.43490663176074,
+    "lng": 78.46793823714195
+  },
+  {
+    "id": "loc_7",
+    "name": "Sunshine Cafe",
+    "address": "20, Kondapur, Hyderabad, Telangana",
+    "distance": "9.6 km",
+    "lat": 17.462477779858098,
+    "lng": 78.36031398988307
+  },
+  {
+    "id": "loc_8",
+    "name": "Prime Park",
+    "address": "50, Banjara Hills, Hyderabad, Telangana",
+    "distance": "14.9 km",
+    "lat": 17.41399891714448,
+    "lng": 78.43911196135679
+  },
+  {
+    "id": "loc_9",
+    "name": "Elite Theater",
+    "address": "64, Secunderabad, Hyderabad, Telangana",
+    "distance": "2.3 km",
+    "lat": 17.444817227854927,
+    "lng": 78.49311291588967
+  },
+  {
+    "id": "loc_10",
+    "name": "Sunshine Park",
+    "address": "4, Charminar, Hyderabad, Telangana",
+    "distance": "3.3 km",
+    "lat": 17.364493668225936,
+    "lng": 78.47041031714456
+  },
+  {
+    "id": "loc_11",
+    "name": "Elite School",
+    "address": "54, Banjara Hills, Hyderabad, Telangana",
+    "distance": "13.0 km",
+    "lat": 17.41697657852689,
+    "lng": 78.42921821418626
+  },
+  {
+    "id": "loc_12",
+    "name": "Royal Cafe",
+    "address": "40, Kukatpally, Hyderabad, Telangana",
+    "distance": "13.0 km",
+    "lat": 17.497958897748276,
+    "lng": 78.40279339600242
+  },
+  {
+    "id": "loc_13",
+    "name": "Sunshine Restaurant",
+    "address": "46, Banjara Hills, Hyderabad, Telangana",
+    "distance": "6.2 km",
+    "lat": 17.407612484918705,
+    "lng": 78.42465610839317
+  },
+  {
+    "id": "loc_14",
+    "name": "Royal Tech Park",
+    "address": "11, Banjara Hills, Hyderabad, Telangana",
+    "distance": "11.5 km",
+    "lat": 17.414599551718755,
+    "lng": 78.43287260629268
+  },
+  {
+    "id": "loc_15",
+    "name": "Blue Apartments",
+    "address": "30, Kukatpally, Hyderabad, Telangana",
+    "distance": "7.0 km",
+    "lat": 17.494832192197144,
+    "lng": 78.40552838718288
+  },
+  {
+    "id": "loc_16",
+    "name": "Elite Cafe",
+    "address": "49, Madhapur, Hyderabad, Telangana",
+    "distance": "11.2 km",
+    "lat": 17.441481218309242,
+    "lng": 78.39416520549916
+  },
+  {
+    "id": "loc_17",
+    "name": "Apollo Metro Station",
+    "address": "85, Begumpet, Hyderabad, Telangana",
+    "distance": "9.4 km",
+    "lat": 17.439802824752547,
+    "lng": 78.46148091934387
+  },
+  {
+    "id": "loc_18",
+    "name": "Blue Metro Station",
+    "address": "67, Gachibowli, Hyderabad, Telangana",
+    "distance": "1.4 km",
+    "lat": 17.430667255111533,
+    "lng": 78.35630902495396
+  },
+  {
+    "id": "loc_19",
+    "name": "Elite Metro Station",
+    "address": "56, Gachibowli, Hyderabad, Telangana",
+    "distance": "1.1 km",
+    "lat": 17.438094335479743,
+    "lng": 78.34683249545881
+  },
+  {
+    "id": "loc_20",
+    "name": "Grand School",
+    "address": "15, Kukatpally, Hyderabad, Telangana",
+    "distance": "8.4 km",
+    "lat": 17.487855890931012,
+    "lng": 78.39671188371645
+  },
+  {
+    "id": "loc_21",
+    "name": "City Theater",
+    "address": "43, Kondapur, Hyderabad, Telangana",
+    "distance": "6.8 km",
+    "lat": 17.46052275206881,
+    "lng": 78.34944549773824
+  },
+  {
+    "id": "loc_22",
+    "name": "Royal Hospital",
+    "address": "45, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "8.7 km",
+    "lat": 17.43882184634342,
+    "lng": 78.41403113167064
+  },
+  {
+    "id": "loc_23",
+    "name": "City Apartments",
+    "address": "26, Secunderabad, Hyderabad, Telangana",
+    "distance": "12.0 km",
+    "lat": 17.432049227539757,
+    "lng": 78.49565787018872
+  },
+  {
+    "id": "loc_24",
+    "name": "Central Mall",
+    "address": "67, Ameerpet, Hyderabad, Telangana",
+    "distance": "1.7 km",
+    "lat": 17.437808745900902,
+    "lng": 78.44319028752464
+  },
+  {
+    "id": "loc_25",
+    "name": "Blue Mall",
+    "address": "84, Secunderabad, Hyderabad, Telangana",
+    "distance": "3.6 km",
+    "lat": 17.439238910137316,
+    "lng": 78.50062597443524
+  },
+  {
+    "id": "loc_26",
+    "name": "City School",
+    "address": "80, Kondapur, Hyderabad, Telangana",
+    "distance": "3.3 km",
+    "lat": 17.46228010597555,
+    "lng": 78.35316700456058
+  },
+  {
+    "id": "loc_27",
+    "name": "Central Apartments",
+    "address": "84, Madhapur, Hyderabad, Telangana",
+    "distance": "15.9 km",
+    "lat": 17.4470902807247,
+    "lng": 78.39427259154466
+  },
+  {
+    "id": "loc_28",
+    "name": "Apollo Metro Station",
+    "address": "62, Kondapur, Hyderabad, Telangana",
+    "distance": "5.8 km",
+    "lat": 17.455364505258352,
+    "lng": 78.36586815494647
+  },
+  {
+    "id": "loc_29",
+    "name": "Elite Hospital",
+    "address": "71, Madhapur, Hyderabad, Telangana",
+    "distance": "3.8 km",
+    "lat": 17.457346536193416,
+    "lng": 78.3822061416197
+  },
+  {
+    "id": "loc_30",
+    "name": "Sunshine Cafe",
+    "address": "100, Begumpet, Hyderabad, Telangana",
+    "distance": "13.2 km",
+    "lat": 17.43551022292485,
+    "lng": 78.47372551987928
+  },
+  {
+    "id": "loc_31",
+    "name": "Grand Cafe",
+    "address": "72, Kukatpally, Hyderabad, Telangana",
+    "distance": "5.9 km",
+    "lat": 17.486032130661318,
+    "lng": 78.39372783976613
+  },
+  {
+    "id": "loc_32",
+    "name": "Prime Metro Station",
+    "address": "32, Secunderabad, Hyderabad, Telangana",
+    "distance": "11.4 km",
+    "lat": 17.448199900584584,
+    "lng": 78.4965859238858
+  },
+  {
+    "id": "loc_33",
+    "name": "Elite School",
+    "address": "74, Banjara Hills, Hyderabad, Telangana",
+    "distance": "5.0 km",
+    "lat": 17.409929472301062,
+    "lng": 78.43165443789896
+  },
+  {
+    "id": "loc_34",
+    "name": "Grand Apartments",
+    "address": "41, Kukatpally, Hyderabad, Telangana",
+    "distance": "2.1 km",
+    "lat": 17.501047718286312,
+    "lng": 78.39622674622147
+  },
+  {
+    "id": "loc_35",
+    "name": "Sunshine Apartments",
+    "address": "65, Ameerpet, Hyderabad, Telangana",
+    "distance": "5.4 km",
+    "lat": 17.43277871668363,
+    "lng": 78.44222701860997
+  },
+  {
+    "id": "loc_36",
+    "name": "Central Hospital",
+    "address": "90, Kukatpally, Hyderabad, Telangana",
+    "distance": "12.8 km",
+    "lat": 17.502460105228483,
+    "lng": 78.39371152181161
+  },
+  {
+    "id": "loc_37",
+    "name": "Elite Park",
+    "address": "19, Kukatpally, Hyderabad, Telangana",
+    "distance": "14.5 km",
+    "lat": 17.495441686801016,
+    "lng": 78.39928052985681
+  },
+  {
+    "id": "loc_38",
+    "name": "Green Apartments",
+    "address": "50, Begumpet, Hyderabad, Telangana",
+    "distance": "13.9 km",
+    "lat": 17.452404348658987,
+    "lng": 78.4659805287698
+  },
+  {
+    "id": "loc_39",
+    "name": "Central Mall",
+    "address": "43, Madhapur, Hyderabad, Telangana",
+    "distance": "14.2 km",
+    "lat": 17.443779990634827,
+    "lng": 78.38772417442642
+  },
+  {
+    "id": "loc_40",
+    "name": "Green Mall",
+    "address": "1, Madhapur, Hyderabad, Telangana",
+    "distance": "12.1 km",
+    "lat": 17.448811348745753,
+    "lng": 78.38497348933993
+  },
+  {
+    "id": "loc_41",
+    "name": "Central Tech Park",
+    "address": "39, Kukatpally, Hyderabad, Telangana",
+    "distance": "1.8 km",
+    "lat": 17.494216406399865,
+    "lng": 78.40082465615231
+  },
+  {
+    "id": "loc_42",
+    "name": "Prime Metro Station",
+    "address": "17, Kondapur, Hyderabad, Telangana",
+    "distance": "2.5 km",
+    "lat": 17.457939487817296,
+    "lng": 78.36596733539889
+  },
+  {
+    "id": "loc_43",
+    "name": "Blue Metro Station",
+    "address": "30, Kukatpally, Hyderabad, Telangana",
+    "distance": "14.0 km",
+    "lat": 17.49296819497934,
+    "lng": 78.39733923540871
+  },
+  {
+    "id": "loc_44",
+    "name": "Royal Mall",
+    "address": "23, Kukatpally, Hyderabad, Telangana",
+    "distance": "2.5 km",
+    "lat": 17.48868728686714,
+    "lng": 78.39867078760678
+  },
+  {
+    "id": "loc_45",
+    "name": "Grand Apartments",
+    "address": "16, Kondapur, Hyderabad, Telangana",
+    "distance": "10.2 km",
+    "lat": 17.46920186549616,
+    "lng": 78.36257639137703
+  },
+  {
+    "id": "loc_46",
+    "name": "Elite Hospital",
+    "address": "96, Gachibowli, Hyderabad, Telangana",
+    "distance": "3.8 km",
+    "lat": 17.44859709831973,
+    "lng": 78.35801528499253
+  },
+  {
+    "id": "loc_47",
+    "name": "Sunshine Theater",
+    "address": "26, Banjara Hills, Hyderabad, Telangana",
+    "distance": "4.4 km",
+    "lat": 17.420924048436977,
+    "lng": 78.42693066979261
+  },
+  {
+    "id": "loc_48",
+    "name": "Green Cafe",
+    "address": "36, Kukatpally, Hyderabad, Telangana",
+    "distance": "14.4 km",
+    "lat": 17.49851200393968,
+    "lng": 78.40428523439847
+  },
+  {
+    "id": "loc_49",
+    "name": "Elite Tech Park",
+    "address": "70, Banjara Hills, Hyderabad, Telangana",
+    "distance": "2.3 km",
+    "lat": 17.41908420917758,
+    "lng": 78.4373209614551
+  },
+  {
+    "id": "loc_50",
+    "name": "Sunshine Theater",
+    "address": "30, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "14.5 km",
+    "lat": 17.434382053014748,
+    "lng": 78.41198728354938
+  },
+  {
+    "id": "loc_51",
+    "name": "Central Metro Station",
+    "address": "32, Begumpet, Hyderabad, Telangana",
+    "distance": "4.7 km",
+    "lat": 17.451788150004035,
+    "lng": 78.46953215402768
+  },
+  {
+    "id": "loc_52",
+    "name": "Green Apartments",
+    "address": "38, Begumpet, Hyderabad, Telangana",
+    "distance": "13.5 km",
+    "lat": 17.446294046028857,
+    "lng": 78.46935532585071
+  },
+  {
+    "id": "loc_53",
+    "name": "Royal Theater",
+    "address": "8, Madhapur, Hyderabad, Telangana",
+    "distance": "14.1 km",
+    "lat": 17.450100082324557,
+    "lng": 78.39447190066622
+  },
+  {
+    "id": "loc_54",
+    "name": "Central Tech Park",
+    "address": "15, Gachibowli, Hyderabad, Telangana",
+    "distance": "4.3 km",
+    "lat": 17.44772261514343,
+    "lng": 78.34361298980188
+  },
+  {
+    "id": "loc_55",
+    "name": "Elite Hospital",
+    "address": "56, Kukatpally, Hyderabad, Telangana",
+    "distance": "10.9 km",
+    "lat": 17.487729119079347,
+    "lng": 78.39597226052432
+  },
+  {
+    "id": "loc_56",
+    "name": "Apollo Apartments",
+    "address": "33, Secunderabad, Hyderabad, Telangana",
+    "distance": "15.2 km",
+    "lat": 17.436500203942202,
+    "lng": 78.4912704889908
+  },
+  {
+    "id": "loc_57",
+    "name": "Grand Hospital",
+    "address": "42, Secunderabad, Hyderabad, Telangana",
+    "distance": "5.7 km",
+    "lat": 17.449675914728548,
+    "lng": 78.48970682414335
+  },
+  {
+    "id": "loc_58",
+    "name": "Prime Tech Park",
+    "address": "60, Madhapur, Hyderabad, Telangana",
+    "distance": "10.9 km",
+    "lat": 17.455946259200104,
+    "lng": 78.39668153134127
+  },
+  {
+    "id": "loc_59",
+    "name": "Blue Metro Station",
+    "address": "100, Kondapur, Hyderabad, Telangana",
+    "distance": "5.9 km",
+    "lat": 17.452774967216662,
+    "lng": 78.34904377949324
+  },
+  {
+    "id": "loc_60",
+    "name": "Grand Apartments",
+    "address": "7, Ameerpet, Hyderabad, Telangana",
+    "distance": "5.0 km",
+    "lat": 17.439602779884947,
+    "lng": 78.43899855843574
+  },
+  {
+    "id": "loc_61",
+    "name": "Sunshine Park",
+    "address": "23, Kukatpally, Hyderabad, Telangana",
+    "distance": "9.4 km",
+    "lat": 17.487036470544407,
+    "lng": 78.40735802991426
+  },
+  {
+    "id": "loc_62",
+    "name": "City Hospital",
+    "address": "37, Begumpet, Hyderabad, Telangana",
+    "distance": "10.3 km",
+    "lat": 17.435747168261486,
+    "lng": 78.47536530344556
+  },
+  {
+    "id": "loc_63",
+    "name": "Elite Restaurant",
+    "address": "39, Begumpet, Hyderabad, Telangana",
+    "distance": "4.0 km",
+    "lat": 17.449008827235414,
+    "lng": 78.45953407508469
+  },
+  {
+    "id": "loc_64",
+    "name": "Prime Park",
+    "address": "87, Kukatpally, Hyderabad, Telangana",
+    "distance": "13.4 km",
+    "lat": 17.486059973182673,
+    "lng": 78.40140307237793
+  },
+  {
+    "id": "loc_65",
+    "name": "Grand Cafe",
+    "address": "85, Gachibowli, Hyderabad, Telangana",
+    "distance": "7.9 km",
+    "lat": 17.44641336368813,
+    "lng": 78.35033354905974
+  },
+  {
+    "id": "loc_66",
+    "name": "Blue Metro Station",
+    "address": "97, Begumpet, Hyderabad, Telangana",
+    "distance": "15.6 km",
+    "lat": 17.452426482833765,
+    "lng": 78.4653942838715
+  },
+  {
+    "id": "loc_67",
+    "name": "Elite Tech Park",
+    "address": "79, Secunderabad, Hyderabad, Telangana",
+    "distance": "1.9 km",
+    "lat": 17.436981847207573,
+    "lng": 78.48917704565275
+  },
+  {
+    "id": "loc_68",
+    "name": "Apollo Restaurant",
+    "address": "14, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "7.3 km",
+    "lat": 17.436165342005737,
+    "lng": 78.40473983923974
+  },
+  {
+    "id": "loc_69",
+    "name": "Elite Theater",
+    "address": "32, Charminar, Hyderabad, Telangana",
+    "distance": "11.5 km",
+    "lat": 17.352392652197413,
+    "lng": 78.47359447875141
+  },
+  {
+    "id": "loc_70",
+    "name": "Prime Hospital",
+    "address": "18, Charminar, Hyderabad, Telangana",
+    "distance": "5.8 km",
+    "lat": 17.363813717117573,
+    "lng": 78.48284614688028
+  },
+  {
+    "id": "loc_71",
+    "name": "Green Hospital",
+    "address": "79, Secunderabad, Hyderabad, Telangana",
+    "distance": "1.1 km",
+    "lat": 17.43802700224485,
+    "lng": 78.49110918809806
+  },
+  {
+    "id": "loc_72",
+    "name": "Grand Park",
+    "address": "44, Kondapur, Hyderabad, Telangana",
+    "distance": "14.8 km",
+    "lat": 17.468842779411297,
+    "lng": 78.36406123606729
+  },
+  {
+    "id": "loc_73",
+    "name": "Sunshine Theater",
+    "address": "27, Charminar, Hyderabad, Telangana",
+    "distance": "12.6 km",
+    "lat": 17.35690621741103,
+    "lng": 78.47304718779337
+  },
+  {
+    "id": "loc_74",
+    "name": "Royal Mall",
+    "address": "10, Charminar, Hyderabad, Telangana",
+    "distance": "7.2 km",
+    "lat": 17.363494302114468,
+    "lng": 78.48253098023194
+  },
+  {
+    "id": "loc_75",
+    "name": "Grand Theater",
+    "address": "64, Gachibowli, Hyderabad, Telangana",
+    "distance": "10.0 km",
+    "lat": 17.440484795838287,
+    "lng": 78.35398242380008
+  },
+  {
+    "id": "loc_76",
+    "name": "Blue Metro Station",
+    "address": "92, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "6.8 km",
+    "lat": 17.441974329406598,
+    "lng": 78.41244222756656
+  },
+  {
+    "id": "loc_77",
+    "name": "City Theater",
+    "address": "83, Ameerpet, Hyderabad, Telangana",
+    "distance": "10.5 km",
+    "lat": 17.427686252534055,
+    "lng": 78.4506457996431
+  },
+  {
+    "id": "loc_78",
+    "name": "Green Mall",
+    "address": "73, Begumpet, Hyderabad, Telangana",
+    "distance": "1.1 km",
+    "lat": 17.453727715799833,
+    "lng": 78.46892423273583
+  },
+  {
+    "id": "loc_79",
+    "name": "Green Tech Park",
+    "address": "80, Kukatpally, Hyderabad, Telangana",
+    "distance": "10.8 km",
+    "lat": 17.49120203098498,
+    "lng": 78.40943946566402
+  },
+  {
+    "id": "loc_80",
+    "name": "Green Restaurant",
+    "address": "93, Madhapur, Hyderabad, Telangana",
+    "distance": "6.2 km",
+    "lat": 17.44730072739484,
+    "lng": 78.38167823894574
+  },
+  {
+    "id": "loc_81",
+    "name": "Prime Apartments",
+    "address": "77, Kondapur, Hyderabad, Telangana",
+    "distance": "7.1 km",
+    "lat": 17.470329429480913,
+    "lng": 78.35638951723989
+  },
+  {
+    "id": "loc_82",
+    "name": "Grand Metro Station",
+    "address": "12, Banjara Hills, Hyderabad, Telangana",
+    "distance": "7.5 km",
+    "lat": 17.41774956675165,
+    "lng": 78.423782029202
+  },
+  {
+    "id": "loc_83",
+    "name": "Royal Restaurant",
+    "address": "78, Begumpet, Hyderabad, Telangana",
+    "distance": "15.2 km",
+    "lat": 17.449591064655117,
+    "lng": 78.460055428796
+  },
+  {
+    "id": "loc_84",
+    "name": "Royal Cafe",
+    "address": "93, Secunderabad, Hyderabad, Telangana",
+    "distance": "14.6 km",
+    "lat": 17.43482573836779,
+    "lng": 78.50588973775069
+  },
+  {
+    "id": "loc_85",
+    "name": "Apollo Hospital",
+    "address": "45, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "5.9 km",
+    "lat": 17.431529942511332,
+    "lng": 78.4124358570781
+  },
+  {
+    "id": "loc_86",
+    "name": "Green Apartments",
+    "address": "10, Gachibowli, Hyderabad, Telangana",
+    "distance": "3.1 km",
+    "lat": 17.44839503109937,
+    "lng": 78.35533118280897
+  },
+  {
+    "id": "loc_87",
+    "name": "Elite Hospital",
+    "address": "30, Kondapur, Hyderabad, Telangana",
+    "distance": "4.3 km",
+    "lat": 17.459847076342637,
+    "lng": 78.36627206245642
+  },
+  {
+    "id": "loc_88",
+    "name": "City Theater",
+    "address": "38, Secunderabad, Hyderabad, Telangana",
+    "distance": "6.4 km",
+    "lat": 17.44300965157652,
+    "lng": 78.50649750169667
+  },
+  {
+    "id": "loc_89",
+    "name": "City Apartments",
+    "address": "36, Kondapur, Hyderabad, Telangana",
+    "distance": "15.5 km",
+    "lat": 17.45130946841315,
+    "lng": 78.36632301437943
+  },
+  {
+    "id": "loc_90",
+    "name": "Blue Theater",
+    "address": "48, Begumpet, Hyderabad, Telangana",
+    "distance": "8.7 km",
+    "lat": 17.43886915769831,
+    "lng": 78.47208174699517
+  },
+  {
+    "id": "loc_91",
+    "name": "Blue Apartments",
+    "address": "51, Kukatpally, Hyderabad, Telangana",
+    "distance": "9.2 km",
+    "lat": 17.489571534954006,
+    "lng": 78.39049222601162
+  },
+  {
+    "id": "loc_92",
+    "name": "Blue Metro Station",
+    "address": "14, Begumpet, Hyderabad, Telangana",
+    "distance": "8.3 km",
+    "lat": 17.445284297960296,
+    "lng": 78.46501401674232
+  },
+  {
+    "id": "loc_93",
+    "name": "Blue Tech Park",
+    "address": "87, Secunderabad, Hyderabad, Telangana",
+    "distance": "10.4 km",
+    "lat": 17.436915820299596,
+    "lng": 78.4998874535298
+  },
+  {
+    "id": "loc_94",
+    "name": "Green Park",
+    "address": "84, Secunderabad, Hyderabad, Telangana",
+    "distance": "15.6 km",
+    "lat": 17.43884720349499,
+    "lng": 78.49650581084734
+  },
+  {
+    "id": "loc_95",
+    "name": "Apollo School",
+    "address": "29, Charminar, Hyderabad, Telangana",
+    "distance": "5.0 km",
+    "lat": 17.35989054493303,
+    "lng": 78.48440612422593
+  },
+  {
+    "id": "loc_96",
+    "name": "Elite Park",
+    "address": "20, Begumpet, Hyderabad, Telangana",
+    "distance": "12.4 km",
+    "lat": 17.439127464477888,
+    "lng": 78.45930050905011
+  },
+  {
+    "id": "loc_97",
+    "name": "City Apartments",
+    "address": "39, Banjara Hills, Hyderabad, Telangana",
+    "distance": "14.0 km",
+    "lat": 17.41811652290133,
+    "lng": 78.43095717195668
+  },
+  {
+    "id": "loc_98",
+    "name": "Elite Apartments",
+    "address": "93, Jubilee Hills, Hyderabad, Telangana",
+    "distance": "3.9 km",
+    "lat": 17.435136344665267,
+    "lng": 78.40016680255499
+  },
+  {
+    "id": "loc_99",
+    "name": "Central Mall",
+    "address": "48, Banjara Hills, Hyderabad, Telangana",
+    "distance": "14.0 km",
+    "lat": 17.407600887939584,
+    "lng": 78.44055312202278
+  },
+  {
+    "id": "loc_100",
+    "name": "Royal Metro Station",
+    "address": "42, Ameerpet, Hyderabad, Telangana",
+    "distance": "7.5 km",
+    "lat": 17.44048029744091,
+    "lng": 78.45583363146298
+  }
+]
