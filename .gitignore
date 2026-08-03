@@ -33,3 +33,5 @@ out/
 *.njsproj
 *.sln
 *.sw?
+
+deployment_guide.md

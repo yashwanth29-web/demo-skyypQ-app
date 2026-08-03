@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Home, CheckCircle2, Utensils, ShoppingBag, ArrowLeft, Clock, MapPin, Shield, Copy, Check } from 'lucide-react'
 import { motion } from 'framer-motion'
 import useOrderStore from '../store/useOrderStore'
@@ -45,20 +45,26 @@ function shortCode(token) {
 
 export default function PickupPage() {
   const navigate = useNavigate()
+  const { id } = useParams()
   const { orders, fetchMyOrders } = useOrderStore()
   const [activeOrder, setActiveOrder] = useState(null)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     const cached = sessionStorage.getItem('skyyq_active_order')
-    if (cached) setActiveOrder(JSON.parse(cached))
+    if (cached) {
+      const parsed = JSON.parse(cached)
+      if (parsed._id === id) {
+        setActiveOrder(parsed)
+      }
+    }
     fetchMyOrders()
-  }, [])
+  }, [id])
 
   useEffect(() => {
-    const fromStore = orders.find((o) => o.isCustomerOrder && o.status !== 'completed') || orders[0]
+    const fromStore = orders.find((o) => o._id === id)
     if (fromStore) setActiveOrder(fromStore)
-  }, [orders])
+  }, [orders, id])
 
   const isDineIn = activeOrder?.type === 'dine-in'
   const restaurantName = activeOrder?.restaurantName || 'Your Restaurant'
@@ -98,7 +104,7 @@ export default function PickupPage() {
 
             <div className="relative z-10">
               {/* Back */}
-              <button onClick={() => navigate('/tracking')}
+              <button onClick={() => navigate(activeOrder?._id ? `/tracking/${activeOrder._id}` : '/')}
                 className="absolute left-0 top-0 flex items-center gap-1 text-slate-500 hover:text-slate-300 text-xs font-bold cursor-pointer transition-colors">
                 <ArrowLeft size={14} /> Back
               </button>

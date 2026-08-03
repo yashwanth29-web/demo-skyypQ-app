@@ -39,7 +39,7 @@ const OrderSchema = new mongoose.Schema(
 
     status: {
       type: String,
-      enum: ['pending', 'preparing', 'ready', 'completed'],
+      enum: ['pending', 'preparing', 'ready', 'completed', 'cancelled'],
       default: 'pending',
       index: true,
     },
@@ -53,6 +53,10 @@ const OrderSchema = new mongoose.Schema(
     slot: { type: String },            // "7:20 PM" — customer arrival time
     prepTime: { type: String },        // "15 min"
     suggestedStart: { type: String },  // "7:05 PM"
+    actualPrepStart: { type: String }, // "7:12 PM" - Exact time kitchen marked preparing
+    actualReadyTime: { type: String }, // "7:25 PM" - Exact time kitchen marked ready
+    actualArrivalTime: { type: String }, // "7:20 PM" - Exact time user clicked I'm Here
+    actualPickupTime: { type: String }, // "7:26 PM" - Exact time order was marked completed
     driveTimeMins: { type: Number },
     tableNumber: { type: Number },
     specialInstructions: [{ type: String }],

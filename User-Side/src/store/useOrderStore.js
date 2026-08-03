@@ -67,12 +67,26 @@ const useOrderStore = create((set, get) => ({
     }
   },
 
-  updateOrderSlot: (orderId, newSlot) => {
-    set((state) => ({
-      orders: state.orders.map((o) =>
-        o._id === orderId ? { ...o, slot: newSlot } : o
-      ),
-    }));
+  updateOrderSlot: async (orderId, newSlot) => {
+    try {
+      const { data } = await api.patch(`/orders/${orderId}/slot`, { slot: newSlot });
+      set((state) => ({
+        orders: state.orders.map((o) => (o._id === orderId ? data : o)),
+      }));
+    } catch (err) {
+      console.error('Failed to update order slot:', err.message);
+    }
+  },
+
+  cancelOrder: async (orderId) => {
+    try {
+      const { data } = await api.patch(`/orders/${orderId}/cancel`);
+      set((state) => ({
+        orders: state.orders.map((o) => (o._id === orderId ? data : o)),
+      }));
+    } catch (err) {
+      console.error('Failed to cancel order:', err.message);
+    }
   },
 
   clearOrders: () => set({ orders: [], error: null }),

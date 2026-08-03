@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { CheckCircle2, Clock, MapPin, ArrowLeft, Utensils, ShoppingBag, QrCode, X, Calendar, Edit3, Lock, Hand } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useOrderStore from '../store/useOrderStore'
@@ -74,39 +74,48 @@ function getTimelineTimes(slotStr = '6:30 PM') {
 
 export default function TrackingPage() {
   const navigate = useNavigate()
-  const { orders, fetchMyOrders, updateOrderFromSocket, updateOrderSlot } = useOrderStore()
+  const { id } = useParams()
+  const { orders, fetchMyOrders, updateOrderFromSocket, updateOrderSlot, cancelOrder } = useOrderStore()
 
   const [activeOrder, setActiveOrder] = useState(null)
   const [selectedSlot, setSelectedSlot] = useState('6:45 PM')
   const [showTimeModal, setShowTimeModal] = useState(false)
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  const [currentTime, setCurrentTime] = useState(new Date())
+
+  // Update current time every minute
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTime(new Date())
+    }, 60000)
+    return () => clearInterval(timer)
+  }, [])
 
   // On mount: load order from sessionStorage first, then fetch from backend
   useEffect(() => {
     const loadOrder = async () => {
-      // Try sessionStorage for immediate display
       const cached = sessionStorage.getItem('skyyq_active_order')
       if (cached) {
         const parsed = JSON.parse(cached)
-        setActiveOrder(parsed)
-        setSelectedSlot(parsed.slot || '6:45 PM')
+        if (parsed._id === id) {
+          setActiveOrder(parsed)
+          setSelectedSlot(parsed.slot || '6:45 PM')
+        }
       }
       // Fetch fresh from backend
       await fetchMyOrders()
     }
     loadOrder()
-  }, [])
+  }, [id])
 
   // Keep activeOrder in sync with store (updated via Socket.io)
   useEffect(() => {
-    const fromStore = orders.find(
-      (o) => o.status !== 'completed' && o.isCustomerOrder
-    ) || orders[0]
+    const fromStore = orders.find((o) => o._id === id)
     if (fromStore) {
       setActiveOrder(fromStore)
       setSelectedSlot((prev) => fromStore.slot || prev)
     }
-  }, [orders])
+  }, [orders, id])
 
   // Join Socket.io room for this specific order
   useEffect(() => {
@@ -142,6 +151,30 @@ export default function TrackingPage() {
   const timeline = getTimelineTimes(selectedSlot)
   const restaurantName = activeOrder?.restaurantName || 'Chutneys - Financial District'
 
+  // Check if kitchen is late to start
+  const isKitchenDelayed = () => {
+    if (currentStatus !== 'pending') return false
+    const startStr = activeOrder?.suggestedStart
+    if (!startStr) return false
+
+    const match = startStr.match(/(\d+):(\d+)\s*(AM|PM)/i)
+    if (!match) return false
+    
+    let h = parseInt(match[1], 10)
+    const m = parseInt(match[2], 10)
+    const ampm = match[3].toUpperCase()
+    if (ampm === 'PM' && h < 12) h += 12
+    if (ampm === 'AM' && h === 12) h = 0
+
+    const startDate = new Date()
+    startDate.setHours(h, m, 0, 0)
+
+    // Consider delayed if it's past the start time
+    return new Date() > startDate
+  }
+
+  const kitchenDelayed = isKitchenDelayed()
+
   // Map status to active timeline index (0 to 4)
   const getStepIndex = () => {
     if (currentStatus === 'preparing') return 1
@@ -152,8 +185,11 @@ export default function TrackingPage() {
 
   const activeStepIdx = getStepIndex()
 
-  const handleCancelOrder = () => {
+  const handleCancelOrder = async () => {
     setShowCancelConfirm(false)
+    if (activeOrder?._id) {
+      await cancelOrder(activeOrder._id)
+    }
     navigate('/')
   }
 
@@ -180,7 +216,7 @@ export default function TrackingPage() {
         </button>
         <h1 className="text-sm font-black text-slate-900 tracking-tight">Track Your Order</h1>
         <button
-          onClick={() => navigate('/pickup')}
+          onClick={() => navigate(`/pickup/${activeOrder?._id}`)}
           className="text-xs font-black text-orange-600 bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-xl hover:bg-orange-100 transition-colors cursor-pointer"
         >
           Pass & QR
@@ -198,13 +234,21 @@ export default function TrackingPage() {
 
           {/* Top Status Badge */}
           <div className="flex items-center justify-center gap-2 relative z-10">
-            {currentStatus === 'preparing' ? (
+            {currentStatus === 'completed' ? (
+              <span className="text-[10px] font-black uppercase tracking-widest text-indigo-700 bg-indigo-50 border border-indigo-200 px-3 py-1 rounded-full">
+                ✅ ORDER COMPLETED & PICKED UP
+              </span>
+            ) : currentStatus === 'preparing' ? (
               <span className="text-[10px] font-black uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full animate-pulse">
                 🔥 CHEF PREPARING YOUR MEAL
               </span>
             ) : currentStatus === 'ready' ? (
               <span className="text-[10px] font-black uppercase tracking-widest text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
                 ✨ FOOD READY FOR PICKUP
+              </span>
+            ) : kitchenDelayed ? (
+              <span className="text-[10px] font-black uppercase tracking-widest text-rose-700 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full animate-pulse">
+                ⚠️ KITCHEN RUNNING LATE
               </span>
             ) : (
               <span className="text-[10px] font-black uppercase tracking-widest text-orange-600 bg-orange-50 border border-orange-200 px-3 py-1 rounded-full">
@@ -226,14 +270,16 @@ export default function TrackingPage() {
           {/* Title & Subtitle */}
           <div className="space-y-1.5 relative z-10">
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              {currentStatus === 'preparing' ? 'Preparing Your Meal' : currentStatus === 'ready' ? 'Food is Ready!' : "You're all set."}
+              {currentStatus === 'completed' ? 'Order Picked Up!' : currentStatus === 'preparing' ? 'Preparing Your Meal' : currentStatus === 'ready' ? 'Food is Ready!' : "You're all set."}
             </h2>
             <p className="text-sm sm:text-base font-extrabold text-orange-600">
-              {currentStatus === 'preparing'
-                ? 'Chef is cooking your dish fresh for your arrival.'
-                : currentStatus === 'ready'
-                  ? 'Your order is hot and packaged at the counter.'
-                  : "We're preparing your food according to your arrival."}
+              {currentStatus === 'completed'
+                ? 'Thanks for using SkYppQ. Enjoy your food!'
+                : currentStatus === 'preparing'
+                  ? 'Chef is cooking your dish fresh for your arrival.'
+                  : currentStatus === 'ready'
+                    ? 'Your order is hot and packaged at the counter.'
+                    : "We're preparing your food according to your arrival."}
             </p>
             <p className="text-xs font-semibold text-slate-500 flex items-center justify-center gap-1 pt-1">
               <MapPin size={13} className="text-orange-500" />
@@ -324,7 +370,7 @@ export default function TrackingPage() {
                 </div>
               </div>
               <span className="text-[10px] font-mono font-bold bg-slate-800 text-slate-300 px-2.5 py-1 rounded-full border border-slate-700">
-                🚗 20 min drive
+                🚗 {activeOrder?.driveTimeMins || 20} min drive
               </span>
             </div>
 
@@ -332,28 +378,58 @@ export default function TrackingPage() {
             <div className="bg-slate-950/80 p-3.5 rounded-2xl border border-slate-800/80 space-y-2.5 text-xs font-extrabold">
               <div className="flex items-center justify-between text-slate-300">
                 <span className="flex items-center gap-2"><span>🕒</span> Now</span>
-                <span className="font-mono text-white">7:00 PM</span>
+                <span className="font-mono text-white">
+                  {currentTime.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
+                </span>
               </div>
 
               <div className="flex items-center justify-between text-slate-400 text-[11px] pl-3 border-l-2 border-orange-500/50 my-1">
-                <span>🚗 Drive (20 min)</span>
+                <span>🚗 Drive ({activeOrder?.driveTimeMins || 20} min)</span>
                 <span className="font-mono text-orange-400">En Route</span>
               </div>
 
-              <div className="flex items-center justify-between text-amber-300 bg-amber-500/10 p-2 rounded-xl border border-amber-500/30 font-black">
-                <span className="flex items-center gap-1.5"><span>👨‍🍳</span> Kitchen Starts Cooking</span>
-                <span className="font-mono font-black">7:08 PM</span>
+              <div className={`flex items-center justify-between p-2 rounded-xl border font-black ${
+                kitchenDelayed 
+                  ? 'text-rose-400 bg-rose-500/10 border-rose-500/30' 
+                  : 'text-amber-300 bg-amber-500/10 border-amber-500/30'
+              }`}>
+                <span className="flex items-center gap-1.5">
+                  <span>{kitchenDelayed ? '⚠️' : '👨‍🍳'}</span> 
+                  {kitchenDelayed ? 'Kitchen is running late' : (activeOrder?.actualPrepStart ? 'Kitchen Started Cooking' : 'Kitchen Starts Cooking')}
+                </span>
+                <span className={`font-mono font-black ${kitchenDelayed ? 'line-through opacity-70' : ''}`}>
+                  {activeOrder?.actualPrepStart || activeOrder?.suggestedStart || 'Soon'}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between text-emerald-400 text-[11px] pl-3 border-l-2 border-emerald-500/50 my-1">
-                <span>🍽️ Food Ready</span>
-                <span className="font-mono text-emerald-400">{timeline.arrival}</span>
+              <div className={`flex items-center justify-between text-[11px] pl-3 border-l-2 my-1 ${
+                activeOrder?.actualReadyTime ? 'text-emerald-300 border-emerald-500 bg-emerald-500/10 p-2 rounded-xl -ml-2' : 'text-emerald-400 border-emerald-500/50'
+              }`}>
+                <span className="flex items-center gap-1.5">
+                  {activeOrder?.actualReadyTime ? '✅' : '🍽️'} {activeOrder?.actualReadyTime ? 'Food is Ready' : 'Food Ready'}
+                </span>
+                <span className="font-mono font-bold text-emerald-400">
+                  {activeOrder?.actualReadyTime || timeline.ready}
+                </span>
               </div>
 
-              <div className="flex items-center justify-between text-emerald-400 bg-emerald-500/10 p-2 rounded-xl border border-emerald-500/30 font-black">
-                <span className="flex items-center gap-1.5"><span>📍</span> You Arrive</span>
-                <span className="font-mono font-black">{timeline.arrival}</span>
+              <div className={`flex items-center justify-between text-[11px] p-2 rounded-xl border font-black ${
+                activeOrder?.actualArrivalTime ? 'text-indigo-300 bg-indigo-500/10 border-indigo-500/30' : 'text-emerald-400 bg-emerald-500/10 border-emerald-500/30'
+              }`}>
+                <span className="flex items-center gap-1.5">
+                  <span>📍</span> {activeOrder?.actualArrivalTime ? 'You Arrived' : 'You Arrive'}
+                </span>
+                <span className="font-mono font-black">
+                  {activeOrder?.actualArrivalTime || timeline.arrival}
+                </span>
               </div>
+
+              {activeOrder?.actualPickupTime && (
+                <div className="flex items-center justify-between text-indigo-400 text-[11px] pl-3 border-l-2 border-indigo-500/50 my-1 mt-2">
+                  <span>🛍️ Order Picked Up</span>
+                  <span className="font-mono text-indigo-400 font-bold">{activeOrder.actualPickupTime}</span>
+                </div>
+              )}
             </div>
 
             <div className="p-2.5 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center gap-2 text-[11px] font-black text-emerald-400">
@@ -369,7 +445,7 @@ export default function TrackingPage() {
                 <Clock size={13} className="text-orange-500" /> Progress Timeline
               </span>
               <span className="text-[10px] font-bold text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200">
-                {currentStatus === 'preparing' ? 'Kitchen Cooking' : currentStatus === 'ready' ? 'Ready at Counter' : 'Booking Confirmed'}
+                {currentStatus === 'completed' ? 'Order Picked Up' : currentStatus === 'preparing' ? 'Kitchen Cooking' : currentStatus === 'ready' ? 'Ready at Counter' : 'Booking Confirmed'}
               </span>
             </div>
 
@@ -420,12 +496,14 @@ export default function TrackingPage() {
           </div>
 
           {/* Action Button */}
-          <button
-            onClick={() => navigate('/pickup')}
-            className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 transition-all active:scale-98 cursor-pointer relative z-10"
-          >
-            <QrCode size={18} /> View Pickup Pass & QR
-          </button>
+          {currentStatus !== 'completed' && (
+            <button
+              onClick={() => navigate(`/pickup/${activeOrder?._id}`)}
+              className="w-full py-4 bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm rounded-2xl shadow-lg shadow-orange-500/25 flex items-center justify-center gap-2 transition-all active:scale-98 cursor-pointer relative z-10"
+            >
+              <QrCode size={18} /> View Pickup Pass & QR
+            </button>
+          )}
         </motion.div>
       </main>
 

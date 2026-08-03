@@ -51,7 +51,7 @@ export default function GlobalNavbar() {
           <nav className="flex items-center gap-1.5 bg-slate-50 p-1.5 rounded-2xl border border-slate-200/60">
             {navItems.slice(0, 2).map((item) => {
               const isActive = item.path === '/'
-                ? path === '/' || path === '/discovery' || path === '/plan-route'
+                ? path === '/' || path === '/plan-route'
                 : path.startsWith(item.path)
               return (
                 <RouterLink
@@ -110,7 +110,7 @@ export default function GlobalNavbar() {
           {/* Home */}
           {navItems.slice(0, 2).map((item) => {
             const isActive = item.path === '/'
-              ? path === '/' || path === '/discovery'
+              ? path === '/' || path === '/plan-route'
               : path.startsWith(item.path)
             return (
               <RouterLink

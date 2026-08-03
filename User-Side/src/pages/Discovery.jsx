@@ -18,6 +18,7 @@ import hyderabadLocations from '../mock/hyderabad_locations.json'
 
 // Lazy Load Map Component
 const LazyRouteMap = lazy(() => import('../components/map/LazyRouteMap'))
+import useOrderStore from '../store/useOrderStore'
 
 export default function DiscoveryPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -39,6 +40,9 @@ export default function DiscoveryPage() {
 
   // Map visibility modal state
   const [showMapModal, setShowMapModal] = useState(false)
+  const { orders } = useOrderStore()
+  
+  const hasActiveOrders = orders.some((o) => o.isCustomerOrder && !['completed', 'cancelled'].includes(o.status))
 
   // Filters & Sorting state
   const [activeFilters, setActiveFilters] = useState({})
@@ -135,9 +139,9 @@ export default function DiscoveryPage() {
       }
 
       resultRestaurants = allRestaurants.filter((r) => {
-        const nameMatch = r.name.toLowerCase().includes(q) || 
-                          r.cuisine.toLowerCase().includes(q) || 
-                          (r.offer && r.offer.toLowerCase().includes(q))
+        const nameMatch = r.name.toLowerCase().includes(q) ||
+          r.cuisine.toLowerCase().includes(q) ||
+          (r.offer && r.offer.toLowerCase().includes(q))
         const dishMatch = resultDishes.some((d) => d.restaurantId === r.id)
         return nameMatch || dishMatch
       })
@@ -401,7 +405,7 @@ export default function DiscoveryPage() {
       </div>
 
       {/* Floating Action Button for Map */}
-      <div className="fixed bottom-20 md:bottom-8 right-6 z-30">
+      <div className={`fixed right-6 z-30 transition-all duration-300 ${hasActiveOrders ? 'bottom-[160px] md:bottom-[240px]' : 'bottom-20 md:bottom-8'}`}>
         <button
           onClick={() => setShowMapModal(true)}
           className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-full font-bold text-xs shadow-lg flex items-center gap-2 transition-transform hover:scale-105 active:scale-95"

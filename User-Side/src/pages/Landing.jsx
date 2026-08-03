@@ -198,13 +198,13 @@ export default function LandingPage() {
     const dName = destInputText.trim() || 'Charminar'
 
     const sLoc = selectedStartLoc ||
-                 hyderabadLocations.find((l) => sName.toLowerCase().includes(l.name.toLowerCase()) || l.name.toLowerCase().includes(sName.toLowerCase())) ||
-                 hyderabadLocations.find((l) => l.name.includes('Financial District')) ||
-                 hyderabadLocations[0]
+      hyderabadLocations.find((l) => sName.toLowerCase().includes(l.name.toLowerCase()) || l.name.toLowerCase().includes(sName.toLowerCase())) ||
+      hyderabadLocations.find((l) => l.name.includes('Financial District')) ||
+      hyderabadLocations[0]
 
     const dLoc = selectedDestLoc ||
-                 hyderabadLocations.find((l) => dName.toLowerCase().includes(l.name.toLowerCase()) || l.name.toLowerCase().includes(dName.toLowerCase())) ||
-                 hyderabadLocations[0]
+      hyderabadLocations.find((l) => dName.toLowerCase().includes(l.name.toLowerCase()) || l.name.toLowerCase().includes(dName.toLowerCase())) ||
+      hyderabadLocations[0]
 
     navigate(
       `/discovery?mode=route&startName=${encodeURIComponent(sName)}&endName=${encodeURIComponent(dName)}&startLat=${sLoc.lat}&startLng=${sLoc.lng}&endLat=${dLoc.lat}&endLng=${dLoc.lng}`
@@ -281,11 +281,10 @@ export default function LandingPage() {
 
             <button
               onClick={() => setVegOnlyToggle((prev) => !prev)}
-              className={`px-3 py-2.5 rounded-2xl flex items-center gap-1.5 transition-all text-xs font-black shrink-0 border ${
-                vegOnlyToggle
+              className={`px-3 py-2.5 rounded-2xl flex items-center gap-1.5 transition-all text-xs font-black shrink-0 border ${vegOnlyToggle
                   ? 'bg-emerald-500 text-white border-emerald-400 shadow-md ring-2 ring-emerald-300/40'
                   : 'bg-white/25 text-white border-white/30 backdrop-blur-md hover:bg-white/35'
-              }`}
+                }`}
             >
               <Leaf size={14} className={vegOnlyToggle ? 'text-white' : 'text-emerald-300'} />
               <span>VEG</span>
@@ -297,11 +296,10 @@ export default function LandingPage() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => setSelectedMode((prev) => (prev === 'route' ? null : 'route'))}
-                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center justify-between ${
-                  selectedMode === 'route'
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center justify-between ${selectedMode === 'route'
                     ? 'bg-white text-slate-900 border-orange-500 shadow-lg ring-2 ring-orange-500/20'
                     : 'bg-white text-slate-900 border-slate-100 shadow-md hover:shadow-lg'
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-base">
@@ -314,19 +312,17 @@ export default function LandingPage() {
                 </div>
                 <ChevronDown
                   size={15}
-                  className={`text-slate-400 transition-transform duration-200 ${
-                    selectedMode === 'route' ? 'rotate-180 text-orange-600' : ''
-                  }`}
+                  className={`text-slate-400 transition-transform duration-200 ${selectedMode === 'route' ? 'rotate-180 text-orange-600' : ''
+                    }`}
                 />
               </button>
 
               <button
                 onClick={() => setSelectedMode((prev) => (prev === 'nearby' ? null : 'nearby'))}
-                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center justify-between ${
-                  selectedMode === 'nearby'
+                className={`p-3.5 rounded-2xl border text-left transition-all duration-200 flex items-center justify-between ${selectedMode === 'nearby'
                     ? 'bg-white text-slate-900 border-orange-500 shadow-lg ring-2 ring-orange-500/20'
                     : 'bg-white text-slate-900 border-slate-100 shadow-md hover:shadow-lg'
-                }`}
+                  }`}
               >
                 <div className="flex items-center gap-2.5">
                   <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-base">
@@ -339,9 +335,8 @@ export default function LandingPage() {
                 </div>
                 <ChevronDown
                   size={15}
-                  className={`text-slate-400 transition-transform duration-200 ${
-                    selectedMode === 'nearby' ? 'rotate-180 text-orange-600' : ''
-                  }`}
+                  className={`text-slate-400 transition-transform duration-200 ${selectedMode === 'nearby' ? 'rotate-180 text-orange-600' : ''
+                    }`}
                 />
               </button>
             </div>
@@ -564,7 +559,7 @@ export default function LandingPage() {
         {/* DESKTOP HERO & DISCOVERY BAR */}
         <section className="bg-gradient-to-b from-orange-50/80 via-amber-50/40 to-slate-50 pt-8 pb-12 px-4 sm:px-8 border-b border-orange-100">
           <div className="max-w-7xl mx-auto space-y-8">
-            
+
             {/* Top Control Bar: Location Selector + Search + Veg Toggle */}
             <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 bg-white/90 backdrop-blur-md p-4 rounded-3xl border border-slate-200/80 shadow-md">
               {/* Location Picker */}
@@ -594,11 +589,10 @@ export default function LandingPage() {
               {/* Pure Veg Switch Toggle */}
               <button
                 onClick={() => setVegOnlyToggle((prev) => !prev)}
-                className={`px-4 py-2.5 rounded-2xl flex items-center justify-center gap-2 transition-all text-xs font-black shrink-0 border ${
-                  vegOnlyToggle
+                className={`px-4 py-2.5 rounded-2xl flex items-center justify-center gap-2 transition-all text-xs font-black shrink-0 border ${vegOnlyToggle
                     ? 'bg-emerald-600 text-white border-emerald-500 shadow-md ring-2 ring-emerald-500/20'
                     : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
-                }`}
+                  }`}
               >
                 <Leaf size={16} className={vegOnlyToggle ? 'text-white' : 'text-emerald-600'} />
                 <span>PURE VEG</span>
@@ -618,11 +612,10 @@ export default function LandingPage() {
                 {/* Card A: Along My Route */}
                 <button
                   onClick={() => setSelectedMode((prev) => (prev === 'route' ? null : 'route'))}
-                  className={`p-5 lg:p-6 rounded-3xl border text-left transition-all duration-300 flex items-center justify-between group ${
-                    selectedMode === 'route'
+                  className={`p-5 lg:p-6 rounded-3xl border text-left transition-all duration-300 flex items-center justify-between group ${selectedMode === 'route'
                       ? 'bg-white border-orange-500 shadow-xl ring-2 ring-orange-500/20'
                       : 'bg-white border-slate-200/90 hover:border-orange-300 shadow-md hover:shadow-lg'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3 lg:gap-4">
                     <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-2xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-xl lg:text-2xl group-hover:scale-110 transition-transform shrink-0">
@@ -637,20 +630,18 @@ export default function LandingPage() {
                   </div>
                   <ChevronDown
                     size={20}
-                    className={`text-slate-400 transition-transform duration-300 ${
-                      selectedMode === 'route' ? 'rotate-180 text-orange-600' : ''
-                    }`}
+                    className={`text-slate-400 transition-transform duration-300 ${selectedMode === 'route' ? 'rotate-180 text-orange-600' : ''
+                      }`}
                   />
                 </button>
 
                 {/* Card B: Near Me */}
                 <button
                   onClick={() => setSelectedMode((prev) => (prev === 'nearby' ? null : 'nearby'))}
-                  className={`p-5 lg:p-6 rounded-3xl border text-left transition-all duration-300 flex items-center justify-between group ${
-                    selectedMode === 'nearby'
+                  className={`p-5 lg:p-6 rounded-3xl border text-left transition-all duration-300 flex items-center justify-between group ${selectedMode === 'nearby'
                       ? 'bg-white border-orange-500 shadow-xl ring-2 ring-orange-500/20'
                       : 'bg-white border-slate-200/90 hover:border-orange-300 shadow-md hover:shadow-lg'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center gap-3 lg:gap-4">
                     <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-2xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-xl lg:text-2xl group-hover:scale-110 transition-transform shrink-0">
@@ -665,9 +656,8 @@ export default function LandingPage() {
                   </div>
                   <ChevronDown
                     size={20}
-                    className={`text-slate-400 transition-transform duration-300 ${
-                      selectedMode === 'nearby' ? 'rotate-180 text-orange-600' : ''
-                    }`}
+                    className={`text-slate-400 transition-transform duration-300 ${selectedMode === 'nearby' ? 'rotate-180 text-orange-600' : ''
+                      }`}
                   />
                 </button>
               </div>
@@ -986,9 +976,8 @@ export default function LandingPage() {
                         setSelectedLocation(`${loc.name}, Hyderabad`)
                         setShowLocationModal(false)
                       }}
-                      className={`w-full text-left p-3 rounded-xl flex items-center justify-between text-xs transition-colors ${
-                        isSelected ? 'bg-orange-50 font-bold text-orange-700' : 'hover:bg-slate-50 text-slate-700'
-                      }`}
+                      className={`w-full text-left p-3 rounded-xl flex items-center justify-between text-xs transition-colors ${isSelected ? 'bg-orange-50 font-bold text-orange-700' : 'hover:bg-slate-50 text-slate-700'
+                        }`}
                     >
                       <div className="flex items-center gap-2.5">
                         <MapPin size={15} className={isSelected ? 'text-orange-600' : 'text-slate-400'} />

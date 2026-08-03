@@ -134,6 +134,40 @@ exports.updateOrderStatus = async (req, res, next) => {
     }
 
     order.status = status;
+    
+    // Set exact time when preparing started
+    if (status === 'preparing' && !order.actualPrepStart) {
+      const now = new Date();
+      let dh = now.getHours();
+      const dm = now.getMinutes();
+      const dampm = dh >= 12 ? 'PM' : 'AM';
+      dh = dh % 12 || 12;
+      const mm = dm < 10 ? `0${dm}` : dm;
+      order.actualPrepStart = `${dh}:${mm} ${dampm}`;
+    }
+
+    // Set exact time when food is ready
+    if (status === 'ready' && !order.actualReadyTime) {
+      const now = new Date();
+      let dh = now.getHours();
+      const dm = now.getMinutes();
+      const dampm = dh >= 12 ? 'PM' : 'AM';
+      dh = dh % 12 || 12;
+      const mm = dm < 10 ? `0${dm}` : dm;
+      order.actualReadyTime = `${dh}:${mm} ${dampm}`;
+    }
+
+    // Set exact time when order is picked up / completed
+    if (status === 'completed' && !order.actualPickupTime) {
+      const now = new Date();
+      let dh = now.getHours();
+      const dm = now.getMinutes();
+      const dampm = dh >= 12 ? 'PM' : 'AM';
+      dh = dh % 12 || 12;
+      const mm = dm < 10 ? `0${dm}` : dm;
+      order.actualPickupTime = `${dh}:${mm} ${dampm}`;
+    }
+
     await order.save();
 
     // Emit real-time events
@@ -142,6 +176,67 @@ exports.updateOrderStatus = async (req, res, next) => {
       // Notify kitchen room (all staff tabs)
       io.to(`restaurant:${order.restaurantId}`).emit('order:updated', order);
       // Notify customer tracking page
+      io.to(`order:${order._id}`).emit('order:updated', order);
+    }
+
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─── Cancel Order (Customer) ──────────────────────────────────────────────────
+exports.cancelOrder = async (req, res, next) => {
+  try {
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+
+    if (order.customerId?.toString() !== req.user.id) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    if (['preparing', 'ready', 'completed'].includes(order.status)) {
+      return res.status(400).json({ error: 'Cannot cancel an order that is already in progress or completed' });
+    }
+
+    order.status = 'cancelled';
+    await order.save();
+
+    const io = req.app.get('io');
+    if (io) {
+      io.to(`restaurant:${order.restaurantId}`).emit('order:updated', order);
+      io.to(`order:${order._id}`).emit('order:updated', order);
+    }
+
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
+
+// ─── Update Order Slot (Customer) ─────────────────────────────────────────────
+exports.updateOrderSlot = async (req, res, next) => {
+  try {
+    const { slot } = req.body;
+    if (!slot) return res.status(400).json({ error: 'Slot is required' });
+
+    const order = await Order.findById(req.params.id);
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+
+    if (order.customerId?.toString() !== req.user.id) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+
+    if (['ready', 'completed', 'cancelled'].includes(order.status)) {
+      return res.status(400).json({ error: 'Cannot change slot for this order' });
+    }
+
+    order.slot = slot;
+    await order.save();
+
+    const io = req.app.get('io');
+    if (io) {
+      io.to(`restaurant:${order.restaurantId}`).emit('order:updated', order);
       io.to(`order:${order._id}`).emit('order:updated', order);
     }
 
@@ -211,6 +306,17 @@ exports.markCustomerArrived = async (req, res, next) => {
     }
 
     order.customerArrived = true;
+    
+    if (!order.actualArrivalTime) {
+      const now = new Date();
+      let dh = now.getHours();
+      const dm = now.getMinutes();
+      const dampm = dh >= 12 ? 'PM' : 'AM';
+      dh = dh % 12 || 12;
+      const mm = dm < 10 ? `0${dm}` : dm;
+      order.actualArrivalTime = `${dh}:${mm} ${dampm}`;
+    }
+
     await order.save();
 
     // Emit real-time events

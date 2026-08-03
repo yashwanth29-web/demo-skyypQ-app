@@ -3,7 +3,8 @@ const router = express.Router();
 const {
   createOrder, getRestaurantOrders,
   getMyOrders, getOrderById, updateOrderStatus,
-  verifyAndCompleteOrder, markCustomerArrived
+  verifyAndCompleteOrder, markCustomerArrived,
+  cancelOrder, updateOrderSlot
 } = require('../controllers/orderController');
 const { verifyToken, requireRole } = require('../middleware/verifyToken');
 
@@ -28,5 +29,11 @@ router.patch('/:id/status', verifyToken, requireRole('owner'), updateOrderStatus
 
 // Customer marks themselves as arrived
 router.patch('/:id/arrived', verifyToken, requireRole('customer'), markCustomerArrived);
+
+// Customer cancels order
+router.patch('/:id/cancel', verifyToken, requireRole('customer'), cancelOrder);
+
+// Customer updates order slot
+router.patch('/:id/slot', verifyToken, requireRole('customer'), updateOrderSlot);
 
 module.exports = router;

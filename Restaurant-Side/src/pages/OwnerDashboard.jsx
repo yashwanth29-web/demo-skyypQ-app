@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Utensils, Clock, Flame, Sparkles, CheckCircle2,
-  ShoppingBag, Plus, LogOut, Zap, Phone, Bell, ScanLine, User
+  ShoppingBag, Plus, LogOut, Zap, Phone, Bell, ScanLine, User, X
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
@@ -86,8 +86,7 @@ export default function OwnerDashboard() {
   // Initial data fetch
   useEffect(() => {
     if (owner?.restaurantId) {
-      fetchOrders(owner.restaurantId, 'pending,preparing,ready')
-      fetchCompletedOrders(owner.restaurantId)
+      fetchOrders(owner.restaurantId, 'pending,preparing,ready,completed,cancelled')
     }
   }, [owner?.restaurantId])
 
@@ -98,10 +97,11 @@ export default function OwnerDashboard() {
   }, [])
 
   // Derived order lists
-  const activeOrders = orders.filter((o) => o.status !== 'completed')
+  const activeOrders = orders.filter((o) => !['completed', 'cancelled'].includes(o.status))
   const preparingOrders = orders.filter((o) => o.status === 'preparing')
   const readyOrders = orders.filter((o) => o.status === 'ready')
   const completedOrders = orders.filter((o) => o.status === 'completed')
+  const cancelledOrders = orders.filter((o) => o.status === 'cancelled')
 
   const getSlotMinutes = (slotStr = '11:59 PM') => {
     const m = slotStr?.match(/(\d+):(\d+)\s*(AM|PM)/i)
@@ -114,8 +114,14 @@ export default function OwnerDashboard() {
   }
 
   const displayedOrders = (() => {
-    const map = { upcoming: activeOrders, preparing: preparingOrders, ready: readyOrders, completed: completedOrders }
-    return [...(map[activeTab] || [])].sort((a, b) => getSlotMinutes(a.slot) - getSlotMinutes(b.slot))
+    const map = { upcoming: activeOrders, preparing: preparingOrders, ready: readyOrders, completed: completedOrders, cancelled: cancelledOrders }
+    let list = [...(map[activeTab] || [])]
+    if (activeTab === 'completed' || activeTab === 'cancelled') {
+      list.sort((a, b) => new Date(b.updatedAt || 0) - new Date(a.updatedAt || 0))
+    } else {
+      list.sort((a, b) => getSlotMinutes(a.slot) - getSlotMinutes(b.slot))
+    }
+    return list
   })()
 
   const handleUpdateStatus = async (orderId, newStatus) => {
@@ -136,12 +142,14 @@ export default function OwnerDashboard() {
     { id: 'preparing', label: 'Preparing', count: preparingOrders.length, color: 'amber' },
     { id: 'ready', label: 'Ready', count: readyOrders.length, color: 'emerald' },
     { id: 'completed', label: 'Done', count: completedOrders.length, color: 'slate' },
+    { id: 'cancelled', label: 'Cancelled', count: cancelledOrders.length, color: 'rose' },
   ]
   const tabActiveStyles = {
     orange: 'bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20',
     amber: 'bg-amber-500 text-white border-amber-500 shadow-lg shadow-amber-500/20',
     emerald: 'bg-emerald-600 text-white border-emerald-600 shadow-lg shadow-emerald-600/20',
     slate: 'bg-slate-900 text-white border-slate-900 shadow-lg',
+    rose: 'bg-rose-600 text-white border-rose-600 shadow-lg shadow-rose-600/20',
   }
 
   return (
@@ -176,7 +184,7 @@ export default function OwnerDashboard() {
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 pt-6 space-y-6">
         {/* Summary counters */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {tabs.map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)}
               className={`p-4 rounded-3xl border text-left transition-all cursor-pointer ${
@@ -199,7 +207,8 @@ export default function OwnerDashboard() {
               {activeTab === 'upcoming' ? 'Upcoming Customer Arrivals'
                 : activeTab === 'preparing' ? 'Orders Currently Preparing'
                 : activeTab === 'ready' ? 'Orders Ready for Pickup'
-                : 'Completed Orders'}
+                : activeTab === 'completed' ? 'Completed Orders'
+                : 'Cancelled Orders'}
             </h2>
             <p className="text-xs text-slate-500 font-semibold">Sorted by nearest arrival first</p>
           </div>
@@ -247,6 +256,11 @@ export default function OwnerDashboard() {
                         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                           <span className="text-xl font-black text-slate-900 tracking-tight flex items-center gap-1.5">
                             <User size={20} className="text-slate-700" /> {firstName}
+                            {order.displayId && (
+                              <span className="text-xs text-slate-500 font-mono font-bold bg-white border border-slate-200 px-2 py-0.5 rounded-lg ml-1 shadow-xs">
+                                {order.displayId}
+                              </span>
+                            )}
                           </span>
                           {order.customerPhone && (
                             <a href={`tel:${order.customerPhone}`}
@@ -256,7 +270,11 @@ export default function OwnerDashboard() {
                           )}
                         </div>
                         <div className="flex flex-wrap items-center gap-2">
-                          {(order.status === 'pending' || order.status === 'waiting') && !order.customerArrived && (
+                          {order.status === 'cancelled' ? (
+                            <span className="px-2.5 py-1 rounded-full text-[11px] font-black uppercase whitespace-nowrap shrink-0 bg-rose-100 text-rose-700 border border-rose-300">
+                              ❌ Cancelled
+                            </span>
+                          ) : (order.status === 'pending' || order.status === 'waiting') && !order.customerArrived && (
                             <span className={`px-2.5 py-1 rounded-full text-[11px] font-black uppercase whitespace-nowrap shrink-0 ${urgencyBadge.style}`}>
                               {urgencyBadge.text}
                             </span>
@@ -280,29 +298,49 @@ export default function OwnerDashboard() {
                           <span className="font-black uppercase tracking-wider text-slate-500 flex items-center gap-1">
                             <Zap size={14} className="text-orange-500" /> Smart Kitchen Schedule
                           </span>
-                          <KitchenTimer suggestedStartStr={suggestedStart} />
+                          {order.status !== 'completed' && order.status !== 'ready' && order.status !== 'cancelled' && (
+                            <KitchenTimer suggestedStartStr={suggestedStart} />
+                          )}
                         </div>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 pt-0.5 text-xs">
-                          <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs">
-                            <span className="text-[9px] font-black uppercase text-slate-400 block">📍 Arrival</span>
-                            <span className="text-sm font-mono font-black text-slate-900 block mt-0.5">{order.slot || '—'}</span>
+                          <div className={`p-2.5 rounded-xl border-2 ${order.actualArrivalTime ? 'bg-indigo-100 border-indigo-500 shadow-sm' : 'bg-white border-slate-200 shadow-xs'}`}>
+                            <span className={`text-[9px] font-black uppercase ${order.actualArrivalTime ? 'text-indigo-800' : 'text-slate-400'} block`}>
+                              📍 {order.actualArrivalTime ? 'Arrived' : 'Arrival'}
+                            </span>
+                            <span className={`text-sm font-mono font-black ${order.actualArrivalTime ? 'text-indigo-700' : 'text-slate-900'} block mt-0.5`}>
+                              {order.actualArrivalTime || order.slot || '—'}
+                            </span>
                           </div>
-                          <div className="bg-amber-100 border-2 border-amber-400 p-2.5 rounded-xl">
-                            <span className="text-[9px] font-black uppercase text-amber-950 block">👨‍🍳 Start Cooking</span>
-                            <span className="text-sm font-mono font-black text-amber-950 block mt-0.5">{suggestedStart}</span>
+                          <div className={`p-2.5 rounded-xl border-2 ${order.actualPrepStart ? 'bg-amber-200 border-amber-500' : 'bg-amber-100 border-amber-400'}`}>
+                            <span className="text-[9px] font-black uppercase text-amber-950 block">
+                              👨‍🍳 {order.actualPrepStart ? 'Started Cooking' : 'Start Cooking'}
+                            </span>
+                            <span className="text-sm font-mono font-black text-amber-950 block mt-0.5">
+                              {order.actualPrepStart || suggestedStart}
+                            </span>
                           </div>
-                          <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs">
-                            <span className="text-[9px] font-black uppercase text-slate-400 block">🍽️ Food Ready</span>
-                            <span className="text-sm font-mono font-black text-emerald-600 block mt-0.5">{order.slot || '—'}</span>
+                          <div className={`p-2.5 rounded-xl border-2 ${order.actualReadyTime ? 'bg-emerald-100 border-emerald-500 shadow-sm' : 'bg-white border-slate-200 shadow-xs'}`}>
+                            <span className={`text-[9px] font-black uppercase ${order.actualReadyTime ? 'text-emerald-800' : 'text-slate-400'} block`}>
+                              🍽️ {order.actualReadyTime ? 'Food is Ready' : 'Food Ready'}
+                            </span>
+                            <span className={`text-sm font-mono font-black ${order.actualReadyTime ? 'text-emerald-700' : 'text-emerald-600'} block mt-0.5`}>
+                              {order.actualReadyTime || order.slot || '—'}
+                            </span>
                           </div>
                           <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs">
                             <span className="text-[9px] font-black uppercase text-slate-400 block">🚗 Drive</span>
                             <span className="text-xs font-mono font-black text-orange-600 block mt-0.5">{order.driveTimeMins ? `${order.driveTimeMins} min` : '—'}</span>
                           </div>
-                          <div className="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs col-span-2 sm:col-span-2">
+                          <div className={`bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs ${order.actualPickupTime ? 'col-span-1' : 'col-span-2 sm:col-span-2'}`}>
                             <span className="text-[9px] font-black uppercase text-slate-400 block">⏱️ Prep Time</span>
                             <span className="text-xs font-mono font-black text-slate-700 block mt-0.5">{order.prepTime || '15 min'}</span>
                           </div>
+                          {order.actualPickupTime && (
+                            <div className="p-2.5 rounded-xl border-2 bg-indigo-50 border-indigo-200 shadow-sm">
+                              <span className="text-[9px] font-black uppercase text-indigo-800 block">🛍️ Picked Up</span>
+                              <span className="text-sm font-mono font-black text-indigo-700 block mt-0.5">{order.actualPickupTime}</span>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -345,7 +383,7 @@ export default function OwnerDashboard() {
                         <div className="space-y-2">
                           <div className="p-2.5 bg-amber-50 border border-amber-200 rounded-xl text-center text-xs font-extrabold text-amber-800 flex items-center justify-center gap-1.5">
                             <Clock size={14} className="animate-spin text-amber-600" />
-                            Preparing • Started at {suggestedStart}
+                            Preparing • Started at {order.actualPrepStart || suggestedStart}
                           </div>
                           <button onClick={() => handleUpdateStatus(order._id, 'ready')}
                             className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-2xl shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98">
@@ -361,6 +399,10 @@ export default function OwnerDashboard() {
                             className="w-full py-4 bg-slate-900 hover:bg-slate-800 text-white font-black text-sm rounded-2xl shadow-lg flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-98">
                             <ScanLine size={18} /> {isDineIn ? 'Scan Pass to Seat' : 'Scan Pass to Complete'}
                           </button>
+                        </div>
+                      ) : order.status === 'cancelled' ? (
+                        <div className="p-3 bg-rose-50 rounded-2xl text-center text-xs font-extrabold text-rose-500 uppercase flex items-center justify-center gap-1.5 border border-rose-200">
+                          <X size={14} /> Order Cancelled
                         </div>
                       ) : (
                         <div className="p-3 bg-slate-100 rounded-2xl text-center text-xs font-extrabold text-slate-500 uppercase flex items-center justify-center gap-1.5">

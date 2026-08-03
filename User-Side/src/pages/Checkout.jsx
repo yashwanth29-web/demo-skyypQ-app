@@ -176,14 +176,17 @@ export default function CheckoutPage() {
     const result = await addOrder(newOrder)
     setIsSubmitting(false)
 
-    if (result.success) {
+    if (result.success && result.order) {
       clearCart()
-      navigate('/tracking')
+      navigate(`/tracking/${result.order._id}`)
     }
   }
 
   const handleFinishSuccess = () => {
-    navigate('/tracking')
+    // In case this is called differently, we might not have result.order
+    // But handleFinishSuccess isn't passed result!
+    // We should probably just navigate to Profile or something if it fails
+    navigate('/profile')
   }
 
   return (

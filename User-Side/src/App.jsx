@@ -30,14 +30,14 @@ function AppContent() {
         <Route path="/plan-route" element={<RoutePlannerPage />} />
         <Route path="/discovery" element={<DiscoveryPage />} />
         <Route path="/restaurant/:id" element={<RestaurantDetailsPage />} />
-        <Route path="/pickup" element={<PickupPage />} />
 
         {/* QR code scan landing */}
         <Route path="/r/:restaurantId" element={<QRLandingPage />} />
 
         {/* Protected routes — requires customer login */}
         <Route path="/checkout" element={<AuthGuard><CheckoutPage /></AuthGuard>} />
-        <Route path="/tracking" element={<AuthGuard><TrackingPage /></AuthGuard>} />
+        <Route path="/tracking/:id" element={<AuthGuard><TrackingPage /></AuthGuard>} />
+        <Route path="/pickup/:id" element={<AuthGuard><PickupPage /></AuthGuard>} />
         <Route path="/profile" element={<AuthGuard><ProfilePage /></AuthGuard>} />
       </Routes>
     </div>

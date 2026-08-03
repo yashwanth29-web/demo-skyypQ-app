@@ -71,7 +71,7 @@ function OrderCard({ order }) {
         <p className="text-[11px] text-slate-400 font-medium">{dateStr} · {timeStr}</p>
         {isActive ? (
           <button
-            onClick={() => navigate('/tracking')}
+            onClick={() => navigate(`/tracking/${order._id}`)}
             className="flex items-center gap-1 text-orange-600 font-black text-xs hover:text-orange-700 cursor-pointer"
           >
             Track Order <ArrowRight size={12} />
@@ -179,7 +179,7 @@ export default function ProfilePage() {
                 <span className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
                 Active Orders
               </h2>
-              <button onClick={() => navigate('/tracking')}
+              <button onClick={() => navigate(`/tracking/${activeOrders[0]._id}`)}
                 className="text-xs font-black text-orange-600 hover:text-orange-700 cursor-pointer">
                 Track →
               </button>
