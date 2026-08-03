@@ -1,6 +1,16 @@
 const Order = require('../models/Order');
 const Customer = require('../models/Customer');
 
+// Helper to get formatted local time for India
+const getFormattedTime = () => {
+  return new Date().toLocaleTimeString('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true
+  });
+};
+
 // ─── Place Order (Customer) ───────────────────────────────────────────────────
 exports.createOrder = async (req, res, next) => {
   try {
@@ -137,35 +147,17 @@ exports.updateOrderStatus = async (req, res, next) => {
     
     // Set exact time when preparing started
     if (status === 'preparing' && !order.actualPrepStart) {
-      const now = new Date();
-      let dh = now.getHours();
-      const dm = now.getMinutes();
-      const dampm = dh >= 12 ? 'PM' : 'AM';
-      dh = dh % 12 || 12;
-      const mm = dm < 10 ? `0${dm}` : dm;
-      order.actualPrepStart = `${dh}:${mm} ${dampm}`;
+      order.actualPrepStart = getFormattedTime();
     }
 
     // Set exact time when food is ready
     if (status === 'ready' && !order.actualReadyTime) {
-      const now = new Date();
-      let dh = now.getHours();
-      const dm = now.getMinutes();
-      const dampm = dh >= 12 ? 'PM' : 'AM';
-      dh = dh % 12 || 12;
-      const mm = dm < 10 ? `0${dm}` : dm;
-      order.actualReadyTime = `${dh}:${mm} ${dampm}`;
+      order.actualReadyTime = getFormattedTime();
     }
 
     // Set exact time when order is picked up / completed
     if (status === 'completed' && !order.actualPickupTime) {
-      const now = new Date();
-      let dh = now.getHours();
-      const dm = now.getMinutes();
-      const dampm = dh >= 12 ? 'PM' : 'AM';
-      dh = dh % 12 || 12;
-      const mm = dm < 10 ? `0${dm}` : dm;
-      order.actualPickupTime = `${dh}:${mm} ${dampm}`;
+      order.actualPickupTime = getFormattedTime();
     }
 
     await order.save();
@@ -308,13 +300,7 @@ exports.markCustomerArrived = async (req, res, next) => {
     order.customerArrived = true;
     
     if (!order.actualArrivalTime) {
-      const now = new Date();
-      let dh = now.getHours();
-      const dm = now.getMinutes();
-      const dampm = dh >= 12 ? 'PM' : 'AM';
-      dh = dh % 12 || 12;
-      const mm = dm < 10 ? `0${dm}` : dm;
-      order.actualArrivalTime = `${dh}:${mm} ${dampm}`;
+      order.actualArrivalTime = getFormattedTime();
     }
 
     await order.save();
