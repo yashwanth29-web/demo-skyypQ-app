@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkYppQ Kitchen Manager</title>
+    <meta name="description" content="SkYppQ Restaurant Owner Dashboard — Synchronize kitchen prep with customer arrival for zero waiting time." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Tailwind CSS CDN (reliable, no build step required) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsQR — lightweight QR code decoder for camera scanning -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              orange: {
+                50: '#fff7ed', 100: '#ffedd5', 200: '#fed7aa',
+                300: '#fdba74', 400: '#fb923c', 500: '#f97316',
+                600: '#ea580c', 700: '#c2410c', 800: '#9a3412', 900: '#7c2d12',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .font-black { font-weight: 900; }
+        .tracking-tight { letter-spacing: -0.025em; }
+        .active\:scale-98:active { transform: scale(0.98); }
+        .shadow-xs { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+      }
+    </style>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html { font-family: 'Inter', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+      body { background-color: #f8fafc; color: #0f172a; min-height: 100vh; }
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
+      ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+      @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .animate-spin { animation: spin 1s linear infinite; }
+      .animate-pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+      .animate-bounce { animation: bounce 1s infinite; }
+      @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+      @keyframes bounce { 0%,100% { transform: translateY(-25%); animation-timing-function: cubic-bezier(0.8,0,1,1); } 50% { transform: none; animation-timing-function: cubic-bezier(0,0,0.2,1); } }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
