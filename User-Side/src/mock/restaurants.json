@@ -2,7 +2,7 @@
   {
     "id": "r-chutneys",
     "name": "Chutneys",
-    "cuisine": "South Indian, Ghee Roast Dosa, Idli, Thali",
+    "cuisine": "South Indian, Ghee Roast Dosa, Idli, Thali, Coffee",
     "rating": "4.8",
     "distance": "1.0",
     "eta": "12 mins",
@@ -19,7 +19,7 @@
   {
     "id": "r-paradise",
     "name": "Paradise Biryani",
-    "cuisine": "Hyderabadi Dum Biryani, Kebabs, Mughlai",
+    "cuisine": "Hyderabadi Dum Biryani, Kebabs, Mughlai, North Indian",
     "rating": "4.9",
     "distance": "1.8",
     "eta": "18 mins",
@@ -36,7 +36,7 @@
   {
     "id": "r-shahghouse",
     "name": "Shah Ghouse Hotel & Restaurant",
-    "cuisine": "Special Dum Biryani, Shawarma, Haleem",
+    "cuisine": "Special Dum Biryani, Shawarma, Haleem, Mughlai",
     "rating": "4.8",
     "distance": "1.4",
     "eta": "16 mins",
@@ -53,7 +53,7 @@
   {
     "id": "r-mehfil",
     "name": "Mehfil Restaurant",
-    "cuisine": "Chicken Biryani, Shawarma, Tandoori",
+    "cuisine": "Chicken Biryani, Shawarma, Tandoori, Kebabs",
     "rating": "4.7",
     "distance": "1.5",
     "eta": "15 mins",
@@ -70,7 +70,7 @@
   {
     "id": "r-bawarchi",
     "name": "Bawarchi Restaurant",
-    "cuisine": "Hyderabadi Biryani, Pathar Ka Gosht",
+    "cuisine": "Hyderabadi Biryani, Pathar Ka Gosht, Mughlai",
     "rating": "4.8",
     "distance": "2.4",
     "eta": "20 mins",
@@ -87,7 +87,7 @@
   {
     "id": "r-pistahouse",
     "name": "Pista House",
-    "cuisine": "Hyderabadi Haleem, Biryani, Bakery",
+    "cuisine": "Hyderabadi Haleem, Biryani, Bakery, Desserts, Cakes",
     "rating": "4.9",
     "distance": "2.0",
     "eta": "18 mins",
@@ -99,6 +99,91 @@
     "coordinates": {
       "lat": 17.391200,
       "lng": 78.478900
+    }
+  },
+  {
+    "id": "r-wowmomo",
+    "name": "Wow! Momo & Chinese Station",
+    "cuisine": "Momos, Chinese, Steamed Dumplings, Hakka Noodles",
+    "rating": "4.8",
+    "distance": "1.2",
+    "eta": "12 mins",
+    "preparationTime": 10,
+    "pickupReadyTime": "01:10 PM",
+    "offer": "Buy 1 Get 1 Steam Momo",
+    "valetEnabled": true,
+    "image": "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&q=80&w=600&h=400",
+    "coordinates": {
+      "lat": 17.425000,
+      "lng": 78.445000
+    }
+  },
+  {
+    "id": "r-mainland",
+    "name": "Mainland China Street",
+    "cuisine": "Chinese, Hakka Noodles, Dim Sums, Chilli Chicken",
+    "rating": "4.7",
+    "distance": "1.6",
+    "eta": "15 mins",
+    "preparationTime": 12,
+    "pickupReadyTime": "01:25 PM",
+    "offer": "Flat 20% OFF Chinese Combos",
+    "valetEnabled": true,
+    "image": "https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&q=80&w=600&h=400",
+    "coordinates": {
+      "lat": 17.432000,
+      "lng": 78.438000
+    }
+  },
+  {
+    "id": "r-belgianwaffle",
+    "name": "The Belgian Waffle & Cake Studio",
+    "cuisine": "Waffles, Cakes, Desserts, Bakery, Shakes",
+    "rating": "4.9",
+    "distance": "0.9",
+    "eta": "10 mins",
+    "preparationTime": 8,
+    "pickupReadyTime": "02:30 PM",
+    "offer": "Free Chocolate Dip on Waffles",
+    "valetEnabled": true,
+    "image": "https://images.unsplash.com/photo-1562376552-0d160a2f238d?auto=format&fit=crop&q=80&w=600&h=400",
+    "coordinates": {
+      "lat": 17.419000,
+      "lng": 78.442000
+    }
+  },
+  {
+    "id": "r-baskinrobbins",
+    "name": "Baskin Robbins & Ice Cream Bar",
+    "cuisine": "Ice Cream, Sundae, Desserts, Cakes",
+    "rating": "4.8",
+    "distance": "1.1",
+    "eta": "10 mins",
+    "preparationTime": 6,
+    "pickupReadyTime": "03:00 PM",
+    "offer": "2 Scoops at Price of 1",
+    "valetEnabled": true,
+    "image": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80&w=600&h=400",
+    "coordinates": {
+      "lat": 17.412000,
+      "lng": 78.449000
+    }
+  },
+  {
+    "id": "r-punjabirasoi",
+    "name": "Punjabi Rasoi & North Indian Thali",
+    "cuisine": "North Indian, Thali, Paneer Butter Masala, Naan",
+    "rating": "4.8",
+    "distance": "1.5",
+    "eta": "16 mins",
+    "preparationTime": 14,
+    "pickupReadyTime": "01:20 PM",
+    "offer": "Special Deluxe Thali Deal",
+    "valetEnabled": true,
+    "image": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?auto=format&fit=crop&q=80&w=600&h=400",
+    "coordinates": {
+      "lat": 17.438000,
+      "lng": 78.455000
     }
   },
   {
@@ -121,7 +206,7 @@
   {
     "id": "r-kfc",
     "name": "KFC - Kentucky Fried Chicken",
-    "cuisine": "Fried Chicken, Burgers, Wings",
+    "cuisine": "Fried Chicken, Burgers, Wings, Fast Food",
     "rating": "4.6",
     "distance": "0.9",
     "eta": "12 mins",
@@ -138,7 +223,7 @@
   {
     "id": "r-dominos",
     "name": "Domino's Pizza",
-    "cuisine": "Pizzas, Cheese Burst, Garlic Bread",
+    "cuisine": "Pizzas, Cheese Burst, Garlic Bread, Italian",
     "rating": "4.7",
     "distance": "1.1",
     "eta": "14 mins",
@@ -155,7 +240,7 @@
   {
     "id": "r-mcdonalds",
     "name": "McDonald's",
-    "cuisine": "Burgers, McSpicy, Fries, Shakes",
+    "cuisine": "Burgers, McSpicy, Fries, Shakes, Fast Food",
     "rating": "4.7",
     "distance": "0.8",
     "eta": "10 mins",
@@ -172,7 +257,7 @@
   {
     "id": "r-burgerking",
     "name": "Burger King",
-    "cuisine": "Whoppers, Crispy Chicken Burgers, Fries",
+    "cuisine": "Whoppers, Crispy Chicken Burgers, Fries, Fast Food",
     "rating": "4.6",
     "distance": "1.3",
     "eta": "14 mins",
@@ -189,7 +274,7 @@
   {
     "id": "r-starbucks",
     "name": "Starbucks Coffee",
-    "cuisine": "Artisan Coffee, Frappuccinos, Bakery",
+    "cuisine": "Artisan Coffee, Frappuccinos, Bakery, Desserts, Cakes",
     "rating": "4.8",
     "distance": "0.6",
     "eta": "10 mins",

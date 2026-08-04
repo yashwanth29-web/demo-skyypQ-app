@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Search, Clock, TrendingUp, X, ChevronRight } from 'lucide-react'
+import { Search, Clock, TrendingUp, X, ChevronRight, Rocket } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 // Production Search Suggestions (Swiggy / Zomato style)
@@ -83,8 +83,8 @@ export default function SearchBarWithAutocomplete({
   return (
     <div ref={wrapperRef} className={`relative w-full ${className}`}>
       {/* Search Input Bar - Swiggy/Zomato Production Styling */}
-      <div className="relative flex items-center bg-slate-100/90 focus-within:bg-white border border-slate-200 focus-within:border-slate-400 rounded-xl transition-all duration-150 shadow-2xs">
-        <div className="pl-3.5 pr-2 text-slate-400 flex items-center justify-center">
+      <div className="relative flex items-center bg-slate-100/90 focus-within:bg-white border border-slate-200 focus-within:border-orange-400 focus-within:ring-2 focus-within:ring-orange-400/20 rounded-2xl transition-all duration-150 shadow-2xs">
+        <div className="pl-3.5 pr-1.5 text-orange-500 flex items-center justify-center">
           <Search size={18} className="shrink-0" />
         </div>
 
@@ -98,10 +98,10 @@ export default function SearchBarWithAutocomplete({
           }}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="w-full py-2.5 pr-8 text-slate-800 text-sm font-medium placeholder:text-slate-400 bg-transparent outline-none border-none"
+          className="w-full py-2.5 pr-2 text-slate-800 text-sm font-medium placeholder:text-slate-400 bg-transparent outline-none border-none"
         />
 
-        {query && (
+        {query ? (
           <button
             onClick={() => {
               setQuery('')
@@ -111,6 +111,11 @@ export default function SearchBarWithAutocomplete({
           >
             <X size={16} />
           </button>
+        ) : (
+          <div className="pr-3 flex items-center gap-1 text-[10px] font-black text-orange-600 bg-orange-50 px-2 py-0.5 rounded-lg border border-orange-200/80 shrink-0">
+            <Rocket size={11} className="text-orange-500 animate-bounce" />
+            <span className="hidden sm:inline">EXPRESS</span>
+          </div>
         )}
       </div>
 

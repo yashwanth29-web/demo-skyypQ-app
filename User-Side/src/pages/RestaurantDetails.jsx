@@ -146,12 +146,12 @@ export default function RestaurantDetailsPage() {
 
   return (
     <div className="min-h-screen bg-slate-50 pb-36 sm:pb-40 font-sans">
-      {/* SECTION 1 – HERO COVER IMAGE & FLOATING NAV */}
-      <div className="relative w-full h-64 sm:h-72 lg:h-80 bg-slate-900 overflow-hidden">
+      {/* SECTION 1 – RICH HERO FOOD COVER IMAGE & FLOATING NAV */}
+      <div className="relative w-full h-64 sm:h-72 lg:h-80 bg-slate-950 overflow-hidden">
         <img
           src={restaurant.image}
           alt={restaurant.name}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-90"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/20" />
 
@@ -159,7 +159,7 @@ export default function RestaurantDetailsPage() {
         <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-slate-950/80 transition-all cursor-pointer"
+            className="w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-slate-950/80 transition-all cursor-pointer shadow-lg active:scale-95"
           >
             <ArrowLeft size={20} />
           </button>
@@ -167,13 +167,13 @@ export default function RestaurantDetailsPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={handleShare}
-              className="w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-slate-950/80 transition-all cursor-pointer"
+              className="w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md text-white flex items-center justify-center border border-white/20 hover:bg-slate-950/80 transition-all cursor-pointer shadow-lg active:scale-95"
             >
               <Share2 size={18} />
             </button>
             <button
               onClick={() => setIsFavorite((prev) => !prev)}
-              className={`w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all cursor-pointer ${
+              className={`w-10 h-10 rounded-full bg-slate-950/60 backdrop-blur-md flex items-center justify-center border border-white/20 transition-all cursor-pointer shadow-lg active:scale-95 ${
                 isFavorite ? 'text-rose-500' : 'text-white hover:text-rose-400'
               }`}
             >
@@ -183,11 +183,11 @@ export default function RestaurantDetailsPage() {
         </div>
 
         {/* Restaurant Header Information Overlay */}
-        <div className="absolute bottom-4 left-4 right-4 z-10 text-white max-w-6xl mx-auto">
+        <div className="absolute bottom-4 left-4 right-4 z-10 text-white max-w-6xl mx-auto space-y-2">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
             <div className="space-y-1.5">
               <div className="flex items-center gap-2.5 flex-wrap">
-                <h1 className="text-2xl sm:text-4xl font-black tracking-tight drop-shadow-md">
+                <h1 className="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md">
                   {restaurant.name}
                 </h1>
                 <span className="bg-emerald-500/90 text-white backdrop-blur-xs text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full flex items-center gap-1 border border-emerald-400/40 shrink-0">
@@ -197,7 +197,7 @@ export default function RestaurantDetailsPage() {
 
               {/* Rating, Cuisine, Distance, Prep Time */}
               <div className="flex items-center gap-2 text-xs sm:text-sm font-extrabold text-slate-200 flex-wrap">
-                <span className="flex items-center gap-1 bg-emerald-600 text-white font-extrabold px-2 py-0.5 rounded-md text-xs shadow-xs">
+                <span className="flex items-center gap-1 bg-emerald-600 text-white font-extrabold px-2.5 py-0.5 rounded-lg text-xs shadow-md">
                   <Star size={12} className="fill-white" /> {restaurant.rating || '4.8'} (1,200+ reviews)
                 </span>
                 <span className="text-slate-400">•</span>
@@ -205,14 +205,14 @@ export default function RestaurantDetailsPage() {
                 <span className="text-slate-400">•</span>
                 <span>{restaurant.distance || '2.4'} km away</span>
                 <span className="text-slate-400">•</span>
-                <span className="text-amber-300 flex items-center gap-1">
+                <span className="text-amber-300 font-black flex items-center gap-1">
                   <Clock size={13} className="text-amber-400" /> Ready in {restaurant.preparationTime || 12} mins
                 </span>
               </div>
             </div>
 
-            {/* SkYppQ Zero-Wait Promise Badge */}
-            <div className="bg-gradient-to-r from-orange-500/90 to-amber-500/90 text-white backdrop-blur-md px-3.5 py-2 rounded-2xl border border-orange-400/40 text-xs font-black flex items-center gap-2 shrink-0 shadow-lg">
+            {/* Zero-Wait Express Pickup Promise Badge */}
+            <div className="bg-gradient-to-r from-orange-500 to-amber-500 text-white backdrop-blur-md px-4 py-2 rounded-2xl border border-orange-400/40 text-xs font-black flex items-center gap-2 shrink-0 shadow-lg">
               <Zap size={16} className="text-amber-200 animate-pulse shrink-0" />
               <span>Zero-Wait Pickup Guaranteed</span>
             </div>

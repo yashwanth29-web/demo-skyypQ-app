@@ -11,6 +11,7 @@ import SearchBarWithAutocomplete from '../components/search/SearchBarWithAutocom
 import PremiumRestaurantCard from '../components/restaurant/PremiumRestaurantCard'
 import FoodDiscoveryCarousel from '../components/restaurant/FoodDiscoveryCarousel'
 import StickyFilterBar from '../components/restaurant/StickyFilterBar'
+import CollectionsSection from '../components/restaurant/CollectionsSection'
 import ActiveOrderWidget from '../components/ActiveOrderWidget'
 
 import mockRestaurants from '../mock/restaurants.json'
@@ -302,8 +303,8 @@ export default function LandingPage() {
                   }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-base">
-                    🚗
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-orange-500 via-amber-500 to-orange-600 text-white flex items-center justify-center font-bold shrink-0 shadow-xs border border-orange-400/30">
+                    <Route size={18} />
                   </div>
                   <div>
                     <h3 className="font-black text-slate-900 text-xs sm:text-sm">Along Route</h3>
@@ -325,8 +326,8 @@ export default function LandingPage() {
                   }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-base">
-                    📍
+                  <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-500 text-white flex items-center justify-center font-bold shrink-0 shadow-xs border border-rose-400/30">
+                    <Compass size={18} />
                   </div>
                   <div>
                     <h3 className="font-black text-slate-900 text-xs sm:text-sm">Near Me</h3>
@@ -351,8 +352,8 @@ export default function LandingPage() {
                 >
                   <div className="p-4 bg-white rounded-2xl border border-orange-200 shadow-lg space-y-3">
                     <div className="space-y-3">
-                      <div className="relative">
-                        <div className="flex justify-between items-center mb-1">
+                      <div className="space-y-1">
+                        <div className="flex justify-between items-center">
                           <label className="text-[10px] font-extrabold uppercase text-slate-400">Start Location</label>
                           <button
                             type="button"
@@ -362,56 +363,60 @@ export default function LandingPage() {
                             🎯 Use Current
                           </button>
                         </div>
-                        <input
-                          type="text"
-                          value={startInputText}
-                          onFocus={() => setShowStartAutocomplete(true)}
-                          onChange={(e) => {
-                            setStartInputText(e.target.value)
-                            setSelectedStartLoc(null)
-                            setShowStartAutocomplete(true)
-                          }}
-                          placeholder="Where are you starting?"
-                          className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none"
-                        />
-                        <MapPin size={14} className="absolute left-2.5 top-8 text-emerald-600" />
-                        <LocationAutocompleteDropdown
-                          show={showStartAutocomplete}
-                          locations={filteredStartLocations}
-                          onSelect={(loc) => {
-                            setStartInputText(`${loc.name}, Hyderabad`)
-                            setSelectedStartLoc(loc)
-                            setShowStartAutocomplete(false)
-                          }}
-                        />
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={startInputText}
+                            onFocus={() => setShowStartAutocomplete(true)}
+                            onChange={(e) => {
+                              setStartInputText(e.target.value)
+                              setSelectedStartLoc(null)
+                              setShowStartAutocomplete(true)
+                            }}
+                            placeholder="Where are you starting?"
+                            className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
+                          />
+                          <MapPin size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-emerald-600 pointer-events-none" />
+                          <LocationAutocompleteDropdown
+                            show={showStartAutocomplete}
+                            locations={filteredStartLocations}
+                            onSelect={(loc) => {
+                              setStartInputText(`${loc.name}, Hyderabad`)
+                              setSelectedStartLoc(loc)
+                              setShowStartAutocomplete(false)
+                            }}
+                          />
+                        </div>
                       </div>
 
-                      <div className="relative">
-                        <label className="text-[10px] font-extrabold uppercase text-slate-400 block mb-1">Destination</label>
-                        <input
-                          type="text"
-                          value={destInputText}
-                          onFocus={() => setShowDestAutocomplete(true)}
-                          onChange={(e) => {
-                            setDestInputText(e.target.value)
-                            setSelectedDestLoc(null)
-                            setShowDestAutocomplete(true)
-                          }}
-                          placeholder="Search destination"
-                          className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none"
-                        />
-                        <Navigation size={14} className="absolute left-2.5 top-8 text-rose-500" />
-                        <LocationAutocompleteDropdown
-                          show={showDestAutocomplete}
-                          locations={filteredDestLocations}
-                          iconColor="text-rose-600"
-                          iconBg="bg-rose-50 border-rose-100"
-                          onSelect={(loc) => {
-                            setDestInputText(`${loc.name}, Hyderabad`)
-                            setSelectedDestLoc(loc)
-                            setShowDestAutocomplete(false)
-                          }}
-                        />
+                      <div className="space-y-1">
+                        <label className="text-[10px] font-extrabold uppercase text-slate-400 block">Destination</label>
+                        <div className="relative">
+                          <input
+                            type="text"
+                            value={destInputText}
+                            onFocus={() => setShowDestAutocomplete(true)}
+                            onChange={(e) => {
+                              setDestInputText(e.target.value)
+                              setSelectedDestLoc(null)
+                              setShowDestAutocomplete(true)
+                            }}
+                            placeholder="Search destination"
+                            className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
+                          />
+                          <Navigation size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-rose-500 pointer-events-none" />
+                          <LocationAutocompleteDropdown
+                            show={showDestAutocomplete}
+                            locations={filteredDestLocations}
+                            iconColor="text-rose-600"
+                            iconBg="bg-rose-50 border-rose-100"
+                            onSelect={(loc) => {
+                              setDestInputText(`${loc.name}, Hyderabad`)
+                              setSelectedDestLoc(loc)
+                              setShowDestAutocomplete(false)
+                            }}
+                          />
+                        </div>
                       </div>
                     </div>
 
@@ -435,8 +440,8 @@ export default function LandingPage() {
                   className="overflow-visible text-slate-900"
                 >
                   <div className="p-4 bg-white rounded-2xl border border-orange-200 shadow-lg space-y-3">
-                    <div className="relative">
-                      <div className="flex justify-between items-center mb-1">
+                    <div className="space-y-1">
+                      <div className="flex justify-between items-center">
                         <label className="text-[10px] font-extrabold uppercase text-slate-400">Current Location</label>
                         <button
                           type="button"
@@ -446,28 +451,30 @@ export default function LandingPage() {
                           🎯 Use Current
                         </button>
                       </div>
-                      <input
-                        type="text"
-                        value={nearInputText}
-                        onFocus={() => setShowNearAutocomplete(true)}
-                        onChange={(e) => {
-                          setNearInputText(e.target.value)
-                          setSelectedNearLoc(null)
-                          setShowNearAutocomplete(true)
-                        }}
-                        placeholder="Enter current location"
-                        className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none"
-                      />
-                      <MapPin size={14} className="absolute left-2.5 top-8 text-orange-500" />
-                      <LocationAutocompleteDropdown
-                        show={showNearAutocomplete}
-                        locations={filteredNearLocations}
-                        onSelect={(loc) => {
-                          setNearInputText(`${loc.name}, Hyderabad`)
-                          setSelectedNearLoc(loc)
-                          setShowNearAutocomplete(false)
-                        }}
-                      />
+                      <div className="relative">
+                        <input
+                          type="text"
+                          value={nearInputText}
+                          onFocus={() => setShowNearAutocomplete(true)}
+                          onChange={(e) => {
+                            setNearInputText(e.target.value)
+                            setSelectedNearLoc(null)
+                            setShowNearAutocomplete(true)
+                          }}
+                          placeholder="Enter current location"
+                          className="w-full bg-slate-50 border border-slate-200 p-2.5 pl-8 rounded-xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
+                        />
+                        <Compass size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" />
+                        <LocationAutocompleteDropdown
+                          show={showNearAutocomplete}
+                          locations={filteredNearLocations}
+                          onSelect={(loc) => {
+                            setNearInputText(`${loc.name}, Hyderabad`)
+                            setSelectedNearLoc(loc)
+                            setShowNearAutocomplete(false)
+                          }}
+                        />
+                      </div>
                     </div>
 
                     <div>
@@ -530,22 +537,38 @@ export default function LandingPage() {
           </div>
         </div>
 
-        {/* 🌟 PREMIUM HORIZONTAL FOOD DISCOVERY CAROUSEL */}
-        <div className="px-4 mt-2">
-          <FoodDiscoveryCarousel />
+        {/* 🌟 1. POPULAR RESTAURANTS NEAR YOU (FIRST 5) */}
+        <div className="px-4 mt-6 space-y-3">
+          <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
+            <h2 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
+              <Flame size={15} className="text-orange-500 fill-orange-500" />
+              <span>POPULAR RESTAURANTS NEAR YOU</span>
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-3.5 sm:gap-4 overflow-x-auto hide-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth">
+            {feedRestaurants.slice(0, 5).map((restaurant) => (
+              <PremiumRestaurantCard key={restaurant.id} restaurant={restaurant} compact={true} />
+            ))}
+          </div>
         </div>
 
-        {/* RESTAURANT FEED (Mobile) */}
+        {/* 🌟 2. HANDPICKED COLLECTIONS (ZOMATO STYLE) */}
+        <div className="px-4">
+          <CollectionsSection />
+        </div>
+
+        {/* 🌟 3. ALL RESTAURANTS FEED */}
         <div className="px-4 mt-6 space-y-4">
           <div className="flex items-center justify-between border-b border-slate-200/80 pb-2">
             <h2 className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
               <Utensils size={15} className="text-orange-500" />
-              <span>{feedRestaurants.length} RESTAURANTS DELIVERING TO YOU</span>
+              <span>ALL EXPLORE RESTAURANTS ({feedRestaurants.length})</span>
             </h2>
           </div>
 
           <div className="space-y-6 sm:space-y-8">
-            {feedRestaurants.map((restaurant) => (
+            {feedRestaurants.slice(5).map((restaurant) => (
               <PremiumRestaurantCard key={restaurant.id} restaurant={restaurant} />
             ))}
           </div>
@@ -599,15 +622,8 @@ export default function LandingPage() {
               </button>
             </div>
 
-            {/* SkYppQ Investor Pitch Headline */}
-            <div className="text-center max-w-4xl mx-auto pt-2 space-y-3">
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-tight bg-gradient-to-r from-orange-600 via-amber-600 to-rose-600 bg-clip-text text-transparent">
-                Synchronizing kitchen preparation with your live drive ETA for instant pickup & dining.
-              </h1>
-            </div>
-
             {/* ROUTEBITE DISCOVERY CARDS (Along My Route & Near Me Desktop/Tablet Cards) */}
-            <div className="max-w-4xl mx-auto">
+            <div className="max-w-4xl mx-auto pt-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 lg:gap-6">
                 {/* Card A: Along My Route */}
                 <button
@@ -618,8 +634,8 @@ export default function LandingPage() {
                     }`}
                 >
                   <div className="flex items-center gap-3 lg:gap-4">
-                    <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-2xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-xl lg:text-2xl group-hover:scale-110 transition-transform shrink-0">
-                      🚗
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-tr from-orange-500 via-amber-500 to-orange-600 text-white flex items-center justify-center font-bold shadow-md shadow-orange-500/25 border border-orange-400/30 group-hover:scale-105 transition-transform shrink-0">
+                      <Route size={24} />
                     </div>
                     <div>
                       <h3 className="font-black text-slate-900 text-base lg:text-lg group-hover:text-orange-600 transition-colors">
@@ -644,8 +660,8 @@ export default function LandingPage() {
                     }`}
                 >
                   <div className="flex items-center gap-3 lg:gap-4">
-                    <div className="w-11 h-11 lg:w-12 lg:h-12 rounded-2xl bg-orange-50 border border-orange-100 text-orange-600 flex items-center justify-center font-bold text-xl lg:text-2xl group-hover:scale-110 transition-transform shrink-0">
-                      📍
+                    <div className="w-12 h-12 lg:w-14 lg:h-14 rounded-2xl bg-gradient-to-tr from-rose-500 via-orange-500 to-amber-500 text-white flex items-center justify-center font-bold shadow-md shadow-rose-500/25 border border-rose-400/30 group-hover:scale-105 transition-transform shrink-0">
+                      <Compass size={24} />
                     </div>
                     <div>
                       <h3 className="font-black text-slate-900 text-base lg:text-lg group-hover:text-orange-600 transition-colors">
@@ -674,8 +690,8 @@ export default function LandingPage() {
                   >
                     <div className="p-6 bg-white rounded-3xl border border-orange-200 shadow-xl space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="relative">
-                          <div className="flex justify-between items-center mb-1">
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center">
                             <label className="text-[11px] font-black uppercase text-slate-400">Start Location</label>
                             <button
                               type="button"
@@ -686,56 +702,60 @@ export default function LandingPage() {
                               <span>Use Current Location</span>
                             </button>
                           </div>
-                          <input
-                            type="text"
-                            value={startInputText}
-                            onFocus={() => setShowStartAutocomplete(true)}
-                            onChange={(e) => {
-                              setStartInputText(e.target.value)
-                              setSelectedStartLoc(null)
-                              setShowStartAutocomplete(true)
-                            }}
-                            placeholder="Where are you starting?"
-                            className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
-                          />
-                          <MapPin size={16} className="absolute left-3 top-3.5 text-emerald-600" />
-                          <LocationAutocompleteDropdown
-                            show={showStartAutocomplete}
-                            locations={filteredStartLocations}
-                            onSelect={(loc) => {
-                              setStartInputText(`${loc.name}, Hyderabad`)
-                              setSelectedStartLoc(loc)
-                              setShowStartAutocomplete(false)
-                            }}
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={startInputText}
+                              onFocus={() => setShowStartAutocomplete(true)}
+                              onChange={(e) => {
+                                setStartInputText(e.target.value)
+                                setSelectedStartLoc(null)
+                                setShowStartAutocomplete(true)
+                              }}
+                              placeholder="Where are you starting?"
+                              className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all shadow-2xs"
+                            />
+                            <MapPin size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-emerald-600 pointer-events-none" />
+                            <LocationAutocompleteDropdown
+                              show={showStartAutocomplete}
+                              locations={filteredStartLocations}
+                              onSelect={(loc) => {
+                                setStartInputText(`${loc.name}, Hyderabad`)
+                                setSelectedStartLoc(loc)
+                                setShowStartAutocomplete(false)
+                              }}
+                            />
+                          </div>
                         </div>
 
-                        <div className="relative">
-                          <label className="text-[11px] font-black uppercase text-slate-400 block mb-1">Destination</label>
-                          <input
-                            type="text"
-                            value={destInputText}
-                            onFocus={() => setShowDestAutocomplete(true)}
-                            onChange={(e) => {
-                              setDestInputText(e.target.value)
-                              setSelectedDestLoc(null)
-                              setShowDestAutocomplete(true)
-                            }}
-                            placeholder="Search destination"
-                            className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
-                          />
-                          <Navigation size={16} className="absolute left-3 top-3.5 text-rose-500" />
-                          <LocationAutocompleteDropdown
-                            show={showDestAutocomplete}
-                            locations={filteredDestLocations}
-                            iconColor="text-rose-600"
-                            iconBg="bg-rose-50 border-rose-100"
-                            onSelect={(loc) => {
-                              setDestInputText(`${loc.name}, Hyderabad`)
-                              setSelectedDestLoc(loc)
-                              setShowDestAutocomplete(false)
-                            }}
-                          />
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-black uppercase text-slate-400 block">Destination</label>
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={destInputText}
+                              onFocus={() => setShowDestAutocomplete(true)}
+                              onChange={(e) => {
+                                setDestInputText(e.target.value)
+                                setSelectedDestLoc(null)
+                                setShowDestAutocomplete(true)
+                              }}
+                              placeholder="Search destination"
+                              className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all shadow-2xs"
+                            />
+                            <Navigation size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-rose-500 pointer-events-none" />
+                            <LocationAutocompleteDropdown
+                              show={showDestAutocomplete}
+                              locations={filteredDestLocations}
+                              iconColor="text-rose-600"
+                              iconBg="bg-rose-50 border-rose-100"
+                              onSelect={(loc) => {
+                                setDestInputText(`${loc.name}, Hyderabad`)
+                                setSelectedDestLoc(loc)
+                                setShowDestAutocomplete(false)
+                              }}
+                            />
+                          </div>
                         </div>
                       </div>
 
@@ -761,8 +781,8 @@ export default function LandingPage() {
                   >
                     <div className="p-6 bg-white rounded-3xl border border-orange-200 shadow-xl space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div className="relative">
-                          <div className="flex justify-between items-center mb-1">
+                        <div className="space-y-1">
+                          <div className="flex justify-between items-center">
                             <label className="text-[11px] font-black uppercase text-slate-400">Current Location</label>
                             <button
                               type="button"
@@ -773,28 +793,30 @@ export default function LandingPage() {
                               <span>Use Current</span>
                             </button>
                           </div>
-                          <input
-                            type="text"
-                            value={nearInputText}
-                            onFocus={() => setShowNearAutocomplete(true)}
-                            onChange={(e) => {
-                              setNearInputText(e.target.value)
-                              setSelectedNearLoc(null)
-                              setShowNearAutocomplete(true)
-                            }}
-                            placeholder="Enter current location"
-                            className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all"
-                          />
-                          <MapPin size={16} className="absolute left-3 top-3.5 text-orange-500" />
-                          <LocationAutocompleteDropdown
-                            show={showNearAutocomplete}
-                            locations={filteredNearLocations}
-                            onSelect={(loc) => {
-                              setNearInputText(`${loc.name}, Hyderabad`)
-                              setSelectedNearLoc(loc)
-                              setShowNearAutocomplete(false)
-                            }}
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              value={nearInputText}
+                              onFocus={() => setShowNearAutocomplete(true)}
+                              onChange={(e) => {
+                                setNearInputText(e.target.value)
+                                setSelectedNearLoc(null)
+                                setShowNearAutocomplete(true)
+                              }}
+                              placeholder="Enter current location"
+                              className="w-full bg-slate-50 border border-slate-200 p-3 pl-9 rounded-2xl text-xs font-bold outline-none focus:border-orange-500 focus:bg-white transition-all shadow-2xs"
+                            />
+                            <Compass size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-orange-500 pointer-events-none" />
+                            <LocationAutocompleteDropdown
+                              show={showNearAutocomplete}
+                              locations={filteredNearLocations}
+                              onSelect={(loc) => {
+                                setNearInputText(`${loc.name}, Hyderabad`)
+                                setSelectedNearLoc(loc)
+                                setShowNearAutocomplete(false)
+                              }}
+                            />
+                          </div>
                         </div>
 
                         <div>
@@ -863,58 +885,37 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* SWIGGY DESKTOP/TABLET CAROUSEL 2: "Top Restaurant Chains in Hyderabad" */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-14">
+        {/* 🌟 1. POPULAR RESTAURANTS NEAR YOU (DESKTOP TOP 5) */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-12">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-                <Flame size={24} className="text-orange-500" />
-                <span>Top Restaurant Chains in Hyderabad</span>
+                <Flame size={24} className="text-orange-500 fill-orange-500" />
+                <span>Popular Restaurants Near You</span>
               </h2>
-              <p className="text-slate-500 text-xs font-medium mt-0.5">Iconic dining and takeaway outlets</p>
+              <p className="text-slate-500 text-xs font-medium mt-0.5">Top rated iconic dining & takeaway spots nearby</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-6">
-            {TOP_CHAINS.map((chain) => (
-              <div
-                key={chain.id}
-                onClick={() => navigate(`/discovery?search=${encodeURIComponent(chain.name)}`)}
-                className="bg-white rounded-3xl border border-slate-100 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 cursor-pointer group flex flex-col justify-between"
-              >
-                <div className="relative h-44 w-full overflow-hidden bg-slate-100">
-                  <img
-                    src={chain.image}
-                    alt={chain.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-3 right-3 bg-emerald-600 text-white text-xs font-black px-2 py-0.5 rounded-lg flex items-center gap-1 shadow-md">
-                    <Star size={12} className="fill-white" />
-                    <span>{chain.rating}</span>
-                  </div>
-                </div>
-                <div className="p-4 space-y-1">
-                  <h3 className="font-black text-slate-900 text-sm lg:text-base group-hover:text-orange-600 transition-colors truncate">
-                    {chain.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 font-medium truncate">{chain.cuisine}</p>
-                  <p className="text-[11px] font-bold text-orange-600 flex items-center gap-1 pt-1">
-                    <Clock size={12} />
-                    <span>{chain.eta} ETA</span>
-                  </p>
-                </div>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 lg:gap-5">
+            {feedRestaurants.slice(0, 5).map((restaurant) => (
+              <PremiumRestaurantCard key={restaurant.id} restaurant={restaurant} />
             ))}
           </div>
         </section>
 
-        {/* DESKTOP/TABLET RESTAURANT FEED WITH STICKY FILTER BAR */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-14">
+        {/* 🌟 2. HANDPICKED COLLECTIONS (ZOMATO EXPLORE PAGE STYLE) */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-10">
+          <CollectionsSection />
+        </section>
+
+        {/* 🌟 3. DESKTOP/TABLET RESTAURANT FEED WITH STICKY FILTER BAR */}
+        <section className="max-w-7xl mx-auto px-4 sm:px-8 mt-12">
           <div className="flex items-center justify-between mb-6">
             <div>
               <h2 className="text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
                 <Utensils size={24} className="text-orange-500" />
-                <span>Explore Restaurants</span>
+                <span>Explore All Restaurants</span>
               </h2>
               <p className="text-slate-500 text-xs font-medium mt-0.5">Discover takeaway spots with live pickup ETAs</p>
             </div>

@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   ArrowLeft, Store, ShoppingBag, Zap, Clock, Navigation,
-  UtensilsCrossed, Sparkles, CheckCircle2
+  UtensilsCrossed, Sparkles, CheckCircle2, Plus, Minus, Trash2
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import useCartStore from '../store/useCartStore'
@@ -41,7 +41,7 @@ const generateTimeSlots = () => {
 export default function CheckoutPage() {
   const navigate = useNavigate()
   const {
-    cart, clearCart, getTotalPrice,
+    cart, clearCart, getTotalPrice, addToCart, removeFromCart,
     orderType, setOrderType, arrivalMode, setArrivalMode,
     selectedSlot, setSelectedSlot, setDineInDetails, restaurantId
   } = useCartStore()
@@ -504,14 +504,55 @@ export default function CheckoutPage() {
                 ) : (
                   <div className="space-y-2 text-xs">
                     {cartItemEntries.map(([itemId, qty]) => {
-                      const item = menuData.find((m) => m.id === itemId)
+                      const item = menuData.find((m) => m.id === itemId) || {
+                        id: itemId,
+                        name: 'Special Item',
+                        price: 160,
+                        prepTime: '10 min',
+                        restaurantId: restaurantId || 'r-chutneys'
+                      }
+                      const itemObj = {
+                        id: itemId,
+                        restaurantId: item.restaurantId || restaurantId || 'r-chutneys',
+                        name: item.name,
+                        price: item.price
+                      }
+
                       return (
-                        <div key={itemId} className="flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border border-slate-100">
-                          <div>
-                            <h4 className="font-black text-slate-900">{item?.name || 'Ghee Roast Masala Dosa'}</h4>
-                            <p className="text-[10px] text-slate-500 font-medium">Qty: {qty} • Prep: {item?.prepTime || '10 min'}</p>
+                        <div key={itemId} className="flex justify-between items-center bg-slate-50 p-2.5 rounded-xl border border-slate-200/80 hover:border-orange-200 transition-colors">
+                          <div className="min-w-0 flex-1 pr-2">
+                            <h4 className="font-black text-slate-900 text-xs truncate">{item.name}</h4>
+                            <p className="text-[10px] text-slate-500 font-medium mt-0.5">
+                              ₹{item.price} each • Prep: {item.prepTime || '10 min'}
+                            </p>
                           </div>
-                          <span className="font-mono font-black text-slate-900">₹{(item?.price || 160) * qty}</span>
+
+                          <div className="flex items-center gap-2.5 shrink-0">
+                            {/* Quantity Controls (+ / - / Trash) */}
+                            <div className="flex items-center gap-1 bg-white border border-slate-200 rounded-lg p-0.5 shadow-2xs">
+                              <button
+                                type="button"
+                                onClick={() => removeFromCart(itemObj)}
+                                className="w-6 h-6 rounded-md bg-slate-100 hover:bg-orange-100 text-slate-700 hover:text-orange-600 flex items-center justify-center transition-colors cursor-pointer"
+                                title="Decrease quantity"
+                              >
+                                {qty === 1 ? <Trash2 size={12} className="text-rose-500" /> : <Minus size={12} />}
+                              </button>
+                              <span className="w-5 text-center font-mono font-black text-slate-900 text-xs">{qty}</span>
+                              <button
+                                type="button"
+                                onClick={() => addToCart(itemObj)}
+                                className="w-6 h-6 rounded-md bg-orange-500 hover:bg-orange-600 text-white flex items-center justify-center shadow-2xs transition-colors cursor-pointer"
+                                title="Increase quantity"
+                              >
+                                <Plus size={12} />
+                              </button>
+                            </div>
+
+                            <span className="font-mono font-black text-slate-900 text-xs min-w-[50px] text-right">
+                              ₹{item.price * qty}
+                            </span>
+                          </div>
                         </div>
                       )
                     })}

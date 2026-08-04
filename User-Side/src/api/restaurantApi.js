@@ -36,7 +36,12 @@ export const fetchMenuByRestaurantId = async (id) => {
   }
   try {
     const { data } = await api.get(`/restaurants/${id}/menu`);
-    return data;
+    if (Array.isArray(data) && data.length > 0) {
+      return data;
+    }
+    // If backend data is empty for this restaurant ID, fallback to matching mock menu items or sample dishes
+    const mockMatch = menuData.filter((m) => m.restaurantId === id);
+    return mockMatch.length > 0 ? mockMatch : menuData.slice(0, 8);
   } catch {
     const menu = menuData.filter((m) => m.restaurantId === id);
     return menu.length > 0 ? menu : menuData.slice(0, 8);

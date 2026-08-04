@@ -271,15 +271,6 @@ export default function DiscoveryPage() {
 
       {/* Main Feed Container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-8 mt-4">
-        {/* Curated Collections */}
-        {!searchQuery && (
-          <CollectionsSection
-            selectedId={selectedCollection}
-            onSelectCollection={(id) =>
-              setSelectedCollection((prev) => (prev === id ? null : id))
-            }
-          />
-        )}
 
         {/* Dedicated Collection Header Banner */}
         {searchParams.get('collection') && (
@@ -318,74 +309,107 @@ export default function DiscoveryPage() {
           </div>
         )}
 
-        {/* Section Heading */}
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-lg font-bold text-slate-900">
-              {searchQuery ? (
-                <span>Results for "{searchQuery}"</span>
-              ) : searchParams.get('collection') ? (
-                <span>{searchParams.get('title') || 'Curated Collection'}</span>
-              ) : mode === 'route' ? (
-                <span>Restaurants Along Your Route</span>
-              ) : (
-                <span>Popular Restaurants Near You</span>
-              )}
-            </h1>
+        {/* 🌟 1. FIRST: POPULAR RESTAURANTS NEAR YOU */}
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h1 className="text-lg sm:text-xl font-black text-slate-900 tracking-tight">
+                {searchQuery ? (
+                  <span>Results for "{searchQuery}"</span>
+                ) : searchParams.get('collection') ? (
+                  <span>{searchParams.get('title') || 'Curated Collection'}</span>
+                ) : mode === 'route' ? (
+                  <span>Restaurants Along Your Route</span>
+                ) : (
+                  <span>Popular Restaurants Near You</span>
+                )}
+              </h1>
+            </div>
+
+            {(searchQuery || searchParams.get('collection')) && (
+              <button
+                onClick={() => setSearchParams({})}
+                className="text-xs font-semibold text-orange-600 hover:underline cursor-pointer"
+              >
+                Clear all
+              </button>
+            )}
           </div>
 
-          {(searchQuery || searchParams.get('collection')) && (
-            <button
-              onClick={() => setSearchParams({})}
-              className="text-xs font-semibold text-orange-600 hover:underline cursor-pointer"
-            >
-              Clear all
-            </button>
+          {/* Dish Matching Results */}
+          {searchQuery && matchingDishes.length > 0 && (
+            <div className="mb-6 space-y-3">
+              <h2 className="text-sm font-bold text-slate-800">
+                Top Matching Dishes ({matchingDishes.length})
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {matchingDishes.slice(0, 6).map((item) => (
+                  <FoodItemCard
+                    key={item.id}
+                    item={item}
+                    restaurantName={
+                      restaurantsData?.find((r) => r.id === item.restaurantId)?.name || 'Paradise Biryani'
+                    }
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Top 5 Popular Restaurants (Horizontal Scroll Row) */}
+          {restaurantsLoading ? (
+            <div className="flex items-center gap-4 overflow-x-auto hide-scrollbar">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="h-56 w-60 rounded-2xl bg-slate-200/60 animate-pulse shrink-0" />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center gap-3.5 sm:gap-5 overflow-x-auto hide-scrollbar pb-3 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scroll-smooth">
+              {filteredRestaurants.slice(0, 5).map((restaurant) => (
+                <PremiumRestaurantCard
+                  key={restaurant.id}
+                  restaurant={restaurant}
+                  isRouteView={mode === 'route'}
+                  compact={true}
+                />
+              ))}
+            </div>
           )}
         </div>
 
-        {/* Dish Matching Results */}
-        {searchQuery && matchingDishes.length > 0 && (
-          <div className="mb-8 space-y-3">
-            <h2 className="text-sm font-bold text-slate-800">
-              Top Matching Dishes ({matchingDishes.length})
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {matchingDishes.slice(0, 6).map((item) => (
-                <FoodItemCard
-                  key={item.id}
-                  item={item}
-                  restaurantName={
-                    restaurantsData?.find((r) => r.id === item.restaurantId)?.name || 'Paradise Biryani'
-                  }
+        {/* 🌟 2. SECOND: HANDPICKED COLLECTIONS */}
+        {!searchQuery && !searchParams.get('collection') && (
+          <div className="my-8">
+            <CollectionsSection
+              selectedId={selectedCollection}
+              onSelectCollection={(id) =>
+                setSelectedCollection((prev) => (prev === id ? null : id))
+              }
+            />
+          </div>
+        )}
+
+        {/* 🌟 3. THIRD: ALL REMAINING RESTAURANTS */}
+        {!restaurantsLoading && filteredRestaurants.length > 5 && !searchParams.get('collection') && (
+          <div className="mt-8 space-y-4">
+            <div className="border-b border-slate-200 pb-2">
+              <h2 className="text-base font-black text-slate-900 uppercase tracking-wider">
+                Explore More Restaurants ({filteredRestaurants.length - 5})
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {filteredRestaurants.slice(5).map((restaurant) => (
+                <PremiumRestaurantCard
+                  key={restaurant.id}
+                  restaurant={restaurant}
+                  isRouteView={mode === 'route'}
                 />
               ))}
             </div>
           </div>
         )}
-
-        {/* Restaurant Feed */}
-        {restaurantsLoading ? (
-          <div className={searchParams.get('collection') ? "flex flex-col space-y-6 max-w-3xl mx-auto" : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"}>
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="h-72 bg-slate-200/60 rounded-3xl animate-pulse" />
-            ))}
-          </div>
-        ) : filteredRestaurants.length > 0 ? (
-          <div className={
-            searchParams.get('collection')
-              ? "flex flex-col space-y-6 sm:space-y-8 max-w-3xl mx-auto"
-              : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
-          }>
-            {filteredRestaurants.map((restaurant) => (
-              <PremiumRestaurantCard
-                key={restaurant.id}
-                restaurant={restaurant}
-                isRouteView={mode === 'route'}
-              />
-            ))}
-          </div>
-        ) : (
+        {/* No Matching Restaurants View */}
+        {!restaurantsLoading && filteredRestaurants.length === 0 && (
           <div className="p-10 text-center bg-white rounded-2xl border border-slate-200 max-w-md mx-auto my-8">
             <h3 className="text-base font-bold text-slate-900">No matching restaurants found</h3>
             <p className="text-xs text-slate-500 mt-1">
@@ -396,7 +420,7 @@ export default function DiscoveryPage() {
                 setActiveFilters({})
                 setSearchParams({})
               }}
-              className="mt-4 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-semibold transition-colors"
+              className="mt-4 px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg text-xs font-semibold transition-colors cursor-pointer"
             >
               Reset Filters
             </button>
