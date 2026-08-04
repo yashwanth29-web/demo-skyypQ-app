@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Clock, ChevronRight, X } from 'lucide-react'
+import { Clock, ChevronRight, X, Rocket, Navigation } from 'lucide-react'
 import useOrderStore from '../store/useOrderStore'
+import { toast } from 'react-hot-toast'
 
 export default function ActiveOrderWidget() {
   const navigate = useNavigate()
   const location = useLocation()
   const { orders, fetchMyOrders } = useOrderStore()
   const [isDismissed, setIsDismissed] = useState(false)
+  
+  // Track which order IDs have "Start Push" activated
+  const [pushedOrders, setPushedOrders] = useState({})
 
-  // Fetch orders when the widget mounts on the homepage
+  // Fetch orders when the widget mounts
   useEffect(() => {
     const token = localStorage.getItem('skyyq_customer_token')
     if (token) {
@@ -19,74 +23,122 @@ export default function ActiveOrderWidget() {
   }, [fetchMyOrders])
 
   // Find ALL active customer orders
-  const activeOrders = orders.filter((o) => o.isCustomerOrder && !['completed', 'cancelled'].includes(o.status))
+  const activeOrders = orders.filter(
+    (o) => o.isCustomerOrder && !['completed', 'cancelled'].includes(o.status)
+  )
 
   if (activeOrders.length === 0 || isDismissed) return null
 
-  // Ensure active order is stored in sessionStorage when clicked, so tracking page knows which one to track
+  // Store active order in sessionStorage & navigate to tracking page
   const handleTrackClick = (order) => {
     sessionStorage.setItem('skyyq_active_order_id', order._id)
     sessionStorage.setItem('skyyq_active_order', JSON.stringify(order))
     navigate(`/tracking/${order._id}`)
   }
 
+  const handleStartPush = (e, orderId) => {
+    e.stopPropagation()
+    setPushedOrders((prev) => ({ ...prev, [orderId]: true }))
+    toast.success('🚀 Push Started! Live ETA tracking activated.', {
+      icon: '🚀',
+      duration: 3000
+    })
+  }
+
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ y: 50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 50, opacity: 0 }}
-        className={`fixed left-0 right-0 z-40 pointer-events-none md:fixed md:right-8 md:left-auto md:max-w-sm md:w-[350px] md:flex md:flex-col items-end transition-all duration-300 ${location.pathname === '/discovery' ? 'bottom-20 md:bottom-[90px]' : 'bottom-20 md:bottom-8'}`}
+        initial={{ y: 80, opacity: 0, x: '-50%' }}
+        animate={{ y: 0, opacity: 1, x: '-50%' }}
+        exit={{ y: 80, opacity: 0, x: '-50%' }}
+        className="fixed bottom-6 sm:bottom-8 left-1/2 z-50 max-w-md w-[92vw] sm:w-[440px] pointer-events-none"
       >
-        <div className="w-full overflow-x-auto md:overflow-visible flex flex-row md:flex-col gap-3 px-4 md:px-0 pb-2 md:pb-0 pt-2 md:pt-0 snap-x snap-mandatory hide-scrollbar">
-          {activeOrders.map((activeOrder, index) => (
-            <div
-              key={activeOrder._id}
-              onClick={() => handleTrackClick(activeOrder)}
-              className="bg-white/95 backdrop-blur-xl border border-orange-200 text-slate-900 rounded-2xl p-3 shadow-xl shadow-orange-500/10 flex items-center justify-between w-[90%] md:w-80 max-w-sm shrink-0 snap-center pointer-events-auto cursor-pointer hover:bg-orange-50/50 transition-all"
-            >
-              <div className="flex items-center gap-3 flex-1 min-w-0">
-                <div className="w-9 h-9 bg-orange-500 text-white rounded-xl flex items-center justify-center shrink-0 font-bold shadow-md shadow-orange-500/20">
-                  <Clock size={18} />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <h4 className="font-black text-xs text-slate-900 truncate">
-                    {activeOrder.status === 'preparing' ? 'Chef is preparing your meal' : activeOrder.status === 'ready' ? 'Food is ready for pickup!' : 'Preparing for your arrival'}
-                  </h4>
-                  <p className="text-[10px] text-slate-500 font-semibold truncate flex items-center gap-1">
-                    <span className="truncate max-w-[80px]">{activeOrder.restaurantName || 'Restaurant'}</span>
-                    <span>•</span>
-                    <span className="font-mono text-orange-600 font-black">₹{activeOrder.total?.toFixed(0) || activeOrder.total}</span>
-                  </p>
-                </div>
-              </div>
+        <div className="w-full flex flex-col gap-2.5">
+          {activeOrders.map((activeOrder) => {
+            const isPushed = pushedOrders[activeOrder._id]
 
-              <div className="flex items-center gap-1.5 shrink-0 pl-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
+            return (
+              <div
+                key={activeOrder._id}
+                onClick={() => {
+                  if (isPushed) {
                     handleTrackClick(activeOrder)
-                  }}
-                  className="flex items-center gap-1 bg-orange-500 hover:bg-orange-600 text-white text-xs font-black px-3 py-1.5 rounded-xl shadow-md shadow-orange-500/20 transition-all cursor-pointer"
-                >
-                  Track <ChevronRight size={14} />
-                </button>
-                {/* Only show dismiss button if it's a single order, or on the last element */}
-                {activeOrders.length === 1 && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      setIsDismissed(true)
-                    }}
-                    className="p-1 text-slate-400 hover:text-slate-700 rounded-lg transition-colors cursor-pointer"
-                    title="Dismiss"
-                  >
-                    <X size={14} />
-                  </button>
-                )}
+                  }
+                }}
+                className="bg-slate-900/95 backdrop-blur-2xl border border-orange-500/40 text-white rounded-2xl p-3 sm:p-3.5 shadow-2xl shadow-orange-500/20 flex items-center justify-between gap-3 w-full pointer-events-auto cursor-pointer hover:border-orange-500 transition-all group"
+              >
+                {/* Left Icon & Text Info */}
+                <div className="flex items-center gap-3 min-w-0 flex-1">
+                  <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-amber-600 text-white rounded-xl flex items-center justify-center shrink-0 font-bold shadow-md shadow-orange-500/30 group-hover:scale-105 transition-transform">
+                    {isPushed ? (
+                      <Navigation size={20} className="animate-pulse text-white" />
+                    ) : (
+                      <Clock size={20} />
+                    )}
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <h4 className="font-black text-xs sm:text-sm text-white truncate flex items-center gap-1.5">
+                      <span>
+                        {activeOrder.status === 'preparing'
+                          ? 'Chef is preparing your meal'
+                          : activeOrder.status === 'ready'
+                          ? 'Food is ready for pickup!'
+                          : 'Preparing for your arrival'}
+                      </span>
+                    </h4>
+                    <p className="text-[11px] text-slate-300 font-semibold truncate flex items-center gap-1.5 mt-0.5">
+                      <span className="truncate max-w-[110px] text-orange-300 font-bold">
+                        {activeOrder.restaurantName || 'Restaurant'}
+                      </span>
+                      <span className="text-slate-500">•</span>
+                      <span className="font-mono text-white font-black">
+                        ₹{activeOrder.total?.toFixed(0) || activeOrder.total}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Right Interactive CTA Button */}
+                <div className="flex items-center gap-2 shrink-0">
+                  {!isPushed ? (
+                    <button
+                      onClick={(e) => handleStartPush(e, activeOrder._id)}
+                      className="flex items-center gap-1.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-md shadow-orange-500/25 transition-all cursor-pointer active:scale-95"
+                    >
+                      <Rocket size={14} className="animate-bounce" />
+                      <span>Start Push</span>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleTrackClick(activeOrder)
+                      }}
+                      className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black px-3.5 py-2 rounded-xl shadow-md shadow-emerald-600/30 transition-all cursor-pointer active:scale-95"
+                    >
+                      <span>Track</span>
+                      <ChevronRight size={14} />
+                    </button>
+                  )}
+
+                  {/* Dismiss Button (Only when 1 order) */}
+                  {activeOrders.length === 1 && (
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setIsDismissed(true)
+                      }}
+                      className="p-1 text-slate-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+                      title="Dismiss"
+                    >
+                      <X size={15} />
+                    </button>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </motion.div>
     </AnimatePresence>
